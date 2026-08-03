@@ -10,7 +10,7 @@ namespace Ch03_P14
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello, ATI!");
         }
     }
 }
