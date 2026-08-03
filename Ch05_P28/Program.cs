@@ -4,13 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ch03_P14
+namespace Ch05_P28
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, ATI!");
+            int a = 5;
+            int b = 2;
+            b = a;
+            a = -3;
+
+            Console.WriteLine($"a = {a}, b = {b}");
         }
     }
 }

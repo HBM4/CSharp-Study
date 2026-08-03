@@ -11,6 +11,7 @@ namespace Ch03_P14
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, ATI!");
+            Console.ReadKey();
         }
     }
 }
