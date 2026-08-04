@@ -13,7 +13,7 @@
             Console.WriteLine($"Quotient: {quotient}, Remainder: {remainder}");
 
             int newVar = b * quotient + remainder;
-            Console.WriteLine(a == newVar ? "The equation holds true." : "The equation does not hold true.");
+            Console.WriteLine(a == newVar ? "True" : "False");
         }
     }
 }
