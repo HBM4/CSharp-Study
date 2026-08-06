@@ -32,17 +32,7 @@ namespace week1_hw2
 
         public void SetDefectType(DefectType defectType)
         {
-            // DefectType 존재하지 않는 것 입력 시 오류 메세지 출력
-            foreach(DefectType type in Enum.GetValues(typeof(DefectType)))
-            {
-                if (type == defectType)
-                {
-                    this.defectType = defectType;
-                    return;
-                }
-            }
-
-            Console.WriteLine("Error: Invalid DefectType");
+            this.defectType = defectType;
         }
 
         public (double, double) GetCoordinates()
