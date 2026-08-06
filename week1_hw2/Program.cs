@@ -102,7 +102,7 @@ namespace week1_hw2
             }
 
             Defect defect = new Defect(x, y, w, h, type);
-            chip.AddDefect(defect);
+            chip.AddDefect(defect); // 칩에 결함 추가
         }
 
         // > remove chipID index
