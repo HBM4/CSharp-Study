@@ -11,50 +11,68 @@ namespace week1_hw2
     internal class Defect
     {
         private double x, y; // 결함 중심의 X, Y 좌표
-        private double width, height; // 결함 박스의 가로, 세로 크기
+        private double defectWidth, defectHeight; // 결함 박스의 가로, 세로 크기
         private DefectType defectType; // 결함의 종류
 
 
-        // x, y, width, height, type을 모두 전달받아 초기화하는 생성자
+        // x, y, defectWidth, defectHeight, type을 모두 전달받아 초기화하는 생성자
         public Defect(double x, double y, double width, double height, DefectType defectType)
         {
             this.x = x;
             this.y = y;
-            this.width = width;
-            this.height = height;
+            this.defectWidth = width;
+            this.defectHeight = height;
             this.defectType = defectType;
         }
 
-        public DefectType GetDefectType()
+        // x 좌표 Get 메서드
+        public double GetX()
         {
-            return defectType;
+            return x;
         }
 
-        public void SetDefectType(DefectType defectType)
+        // y 좌표 Get 메서드
+        public double GetY()
         {
-            this.defectType = defectType;
+            return y;
         }
 
-        public (double, double) GetCoordinates()
-        {
-            return (x, y);
-        }
-
+        // x & y 좌표 Set 메서드
         public void SetCoordinates(double x, double y)
         {
             this.x = x;
             this.y = y;
         }
 
-        public (double, double) GetSize()
+        // defectWidth Get 메서드
+        public double GetWidth()
         {
-            return (width, height);
+            return defectWidth;
         }
 
+        // defectHeight Get 메서드
+        public double GetHeight()
+        {
+            return defectHeight;
+        }
+        
+        // defectWidth & defectHeight Set 메서드
         public void SetSize(double width, double height)
         {
-            this.width = width;
-            this.height = height;
+            this.defectWidth = width;
+            this.defectHeight = height;
+        }
+
+        // defectType Get 메서드
+        public DefectType GetDefectType()
+        {
+            return defectType;
+        }
+
+        // defectType Set 메서드
+        public void SetDefectType(DefectType defectType)
+        {
+            this.defectType = defectType;
         }
     }
 }

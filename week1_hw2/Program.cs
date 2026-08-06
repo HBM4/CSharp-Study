@@ -1,14 +1,20 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace week1_hw2
 {
     /*
-    create chipID width height
-    add chipID x y w h type
-    remove chipID index
+    create_chip chipID chipWidth chipHeight
+    remove_chip chipID
+    add_defect chipID x y defectWidth defectHeight defectType
+    remove_defect chipID index
     print chipID
     exit
     */
+
     internal class Program
     {
         static Chip[] chips = new Chip[100];
@@ -51,20 +57,20 @@ namespace week1_hw2
             return null;
         }
 
-        // > create chipID width height
+        // > create chipID chipWidth chipHeight
         static void Create(string[] words)
         {
             string chipID = words[1];
-            double width = Convert.ToDouble(words[2]);
-            double height = Convert.ToDouble(words[3]);
+            double chipWidth = Convert.ToDouble(words[2]);
+            double chipHeight = Convert.ToDouble(words[3]);
 
-            chips[chipCount] = new Chip(chipID, width, height);
+            chips[chipCount] = new Chip(chipID, chipWidth, chipHeight);
             chipCount++;
 
-            Console.WriteLine($"Log: {chipID} 칩을 생성함. (Width={width}, Height={height})");
+            Console.WriteLine($"Log: {chipID} 칩을 생성함. (Width={chipWidth}, Height={chipHeight})");
         }
 
-        // > add chipID x y w h type
+        // > add chipID x y defectWidth defectHeight defectType
         static void Add(string[] words)
         {
             string chipID = words[1];
@@ -72,8 +78,8 @@ namespace week1_hw2
 
             double x = Convert.ToDouble(words[2]); // x 좌표
             double y = Convert.ToDouble(words[3]); // y 좌표
-            double w = Convert.ToDouble(words[4]); // 결함 박스 width
-            double h = Convert.ToDouble(words[5]); // 결함 박스 height
+            double defectWidth = Convert.ToDouble(words[4]); // 결함 박스 width
+            double defectHeight = Convert.ToDouble(words[5]); // 결함 박스 height
             DefectType type; // 결함 타입
 
             switch (words[6]) // 결함 타입 문자열을 DefectType enum으로 변환
@@ -101,7 +107,7 @@ namespace week1_hw2
                     break;
             }
 
-            Defect defect = new Defect(x, y, w, h, type);
+            Defect defect = new Defect(x, y, defectWidth, defectHeight, type);
             chip.AddDefect(defect); // 칩에 결함 추가
         }
 

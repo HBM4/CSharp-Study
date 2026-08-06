@@ -9,107 +9,90 @@ namespace week1_hw2
     internal class Chip
     {
         private string chipID; // 칩의 고유 ID
-        private double width, height; // 칩의 가로, 세로 크기
+        private double chipWidth, chipHeight; // 칩의 가로, 세로 크기
         private Defect[] defects; // 칩에 존재하는 결함들을 저장하는 배열
         private int defectCount; // 현재 칩에 존재하는 결함의 수
 
-        // chipID, width, height를 전달받아 초기화하는 생성자
+        // chipID, chipWidth, chipHeight를 전달받아 초기화하는 생성자
+        // 추후 File I/O나 이미지 처리 가능하면 chipWidth, chipHeight 자동 처리로 수정
         public Chip(string chipID, double width, double height)
         {
             this.chipID = chipID;
-            this.width = width;
-            this.height = height;
-            defects = new Defect[100]; // 최대 100개의 결함을 저장할 수 있는 배열 (나중에 무한 확장 가능하게 가능?)
+            this.chipWidth = width;
+            this.chipHeight = height;
+            defects = new Defect[100]; // 칩 당 최대 100개의 결함 저장 (나중에 무한 확장 가능?)
             defectCount = 0;
         }
 
-        // 현재 미사용: chipID 받아서 초기화하는 생성자 (나중에 File I/O 관련 배우면 활용 가능?)
-        public Chip(string chipID)
-        {
-            this.chipID = chipID;
-            // width, height는 자동으로 설정하는 코드
-            defects = new Defect[100];
-            defectCount = 0;
-        }
-
-        // chipID Get, Set 메서드
+        // chipID Get 메서드
         public string GetChipID()
         {
             return chipID;
         }
 
+        // chipID Set 메서드
         public void SetChipID(string chipID)
         {
             this.chipID = chipID;
         }
 
-        // width & height Get, Set 메서드
-        public (double, double) GetDimensions()
+        // chipWidth Get 메서드
+        public double GetWidth()
         {
-            return (width, height);
+            return chipWidth;
         }
 
-        public void SetDimensions(double width, double height) // File I/O 이후엔 필요 없을 듯?
+        // chipHeight Get 메서드
+        public double GetHeight()
         {
-            this.width = width;
-            this.height = height;
+            return chipHeight;
+        }
+
+        // chipWidth, chipHeight Set 메서드
+        public void SetSize(double width, double height)
+        {
+            this.chipWidth = width;
+            this.chipHeight = height;
         }
 
         // Chip에 Defect 추가하는 메서드
         public void AddDefect(Defect defect)
         {
             // 결함 중심점 좌표가 칩 경계를 벗어나는지 확인
-            double x, y;
-            (x, y) = defect.GetCoordinates();
+            double x = defect.GetX();
+            double y = defect.GetY();
 
-            if (x < 0 || x > width || y < 0 || y > height)
+            if (x < 0 || x > chipWidth || y < 0 || y > chipHeight)
             {
                 Console.WriteLine("Error: 추가 실패. 결함 좌표가 칩 경계를 벗어남.");
                 return;
             }
 
-            // 그려지는 결함 박스가 칩 경계를 벗어나는지 확인
-            double w, h;
-            (w, h) = defect.GetSize();
+            // 차지하는 결함 박스가 칩 경계를 벗어나는지 확인
+            double w = defect.GetWidth();
+            double h = defect.GetHeight();
 
-            if (x - w / 2 < 0 || x + w / 2 > width || y - h / 2 < 0 || y + h / 2 > height)
+            if (x - w / 2 < 0 || x + w / 2 > chipWidth || y - h / 2 < 0 || y + h / 2 > chipHeight)
             {
                 Console.WriteLine("Error: 추가 실패. 결함 박스가 칩 경계를 벗어남.");
                 return;
             }
 
-            // DefectType이 유효한 값인지 확인
-            // Enum.GetValues(typeof(DefectType))는 { Pit, Discolor, Scratch, Void, Crack, Particle, Short }를 담은 배열을 반환함
-            bool isValidType = false;
-            foreach (DefectType type in Enum.GetValues(typeof(DefectType)))
-            {
-                if (type == defect.GetDefectType())
-                {
-                    isValidType = true;
-                    break;
-                }
-            }
-
-            if (!isValidType)
-            {
-                Console.WriteLine("Error: 추가 실패. 유효하지 않은 DefectType을 입력함.");
-                return;
-            }
-
-            // 결함을 배열에 추가 및 최대 결함 수 초과 확인 (무한 배열일 시 수정 필요)
+            // 최대 결함 수 초과 확인 (무한 배열일 시 수정 필요)
             if (defectCount >= defects.Length)
             {
                 Console.WriteLine($"Error: 추가 실패. 추가 가능한 결함 수를 초과함. (최대 {defects.Length}개)");
                 return;
             }
 
+            // 결함 배열에 추가
             defects[defectCount] = defect;
             defectCount++;
 
             Console.WriteLine($"Log: {chipID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");
         }
 
-        // index에 해당하는 결함을 반환하는 메서드
+        // Chip에 Defect 조회하는 메서드
         public Defect GetDefect(int index)
         {
             if (index < 0 || index >= defectCount)
@@ -153,14 +136,16 @@ namespace week1_hw2
         {
             Console.WriteLine("========================");
             Console.WriteLine($"Chip ID: {chipID}");
-            Console.WriteLine($"Chip Dimensions: {width} x {height}");
+            Console.WriteLine($"Chip Size: {chipWidth} x {chipHeight}");
             Console.WriteLine($"총 결함 수: {defectCount}");
 
             for (int i = 0; i < defectCount; i++)
             {
-                var defect = defects[i];
-                var (x, y) = defect.GetCoordinates();
-                var (w, h) = defect.GetSize();
+                Defect defect = defects[i];
+                double x = defect.GetX();
+                double y = defect.GetY();
+                double w = defect.GetWidth();
+                double h = defect.GetHeight();
                 Console.WriteLine($"└ Defect {i}: Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h})");
             }
             Console.WriteLine("========================");
