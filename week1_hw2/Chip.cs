@@ -23,7 +23,7 @@ namespace week1_hw2
             defectCount = 0;
         }
 
-        // chipID 받아서 초기화하는 생성자 (나중에 File I/O 관련 배우면 활용 가능?)
+        // 현재 미사용: chipID 받아서 초기화하는 생성자 (나중에 File I/O 관련 배우면 활용 가능?)
         public Chip(string chipID)
         {
             this.chipID = chipID;
@@ -78,16 +78,35 @@ namespace week1_hw2
                 return;
             }
 
-            // 결함을 배열에 추가 및 최대 결함 수 초과 확인 (무한 배열일 시 수정 필요)
-            if (defectCount < defects.Length)
+            // DefectType이 유효한 값인지 확인
+            // Enum.GetValues(typeof(DefectType))는 { Pit, Discolor, Scratch, Void, Crack, Particle, Short }를 담은 배열을 반환함
+            bool isValidType = false;
+            foreach (DefectType type in Enum.GetValues(typeof(DefectType)))
             {
-                defects[defectCount] = defect;
-                defectCount++;
+                if (type == defect.GetDefectType())
+                {
+                    isValidType = true;
+                    break;
+                }
             }
-            else
+
+            if (!isValidType)
+            {
+                Console.WriteLine("Error: 추가 실패. 유효하지 않은 DefectType을 입력함.");
+                return;
+            }
+
+            // 결함을 배열에 추가 및 최대 결함 수 초과 확인 (무한 배열일 시 수정 필요)
+            if (defectCount >= defects.Length)
             {
                 Console.WriteLine($"Error: 추가 실패. 추가 가능한 결함 수를 초과함. (최대 {defects.Length}개)");
+                return;
             }
+
+            defects[defectCount] = defect;
+            defectCount++;
+
+            Console.WriteLine($"Log: {chipID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");)
         }
 
         // index에 해당하는 결함을 반환하는 메서드
@@ -95,7 +114,7 @@ namespace week1_hw2
         {
             if (index < 0 || index >= defectCount)
             {
-                Console.WriteLine("Error: 조회 실패. 유효하지 않은 결함 인덱스.");
+                Console.WriteLine("Error: 조회 실패. 유효하지 않은 결함 인덱스를 입력함.");
                 return null;
             }
 
@@ -107,7 +126,7 @@ namespace week1_hw2
         {
             if (index < 0 || index >= defectCount)
             {
-                Console.WriteLine("Error: 삭제 실패. 유효하지 않은 결함 인덱스.");
+                Console.WriteLine("Error: 삭제 실패. 유효하지 않은 결함 인덱스를 입력함.");
                 return;
             }
 
@@ -134,7 +153,7 @@ namespace week1_hw2
         {
             Console.WriteLine("========================");
             Console.WriteLine($"Chip ID: {chipID}");
-            Console.WriteLine($"Dimensions: {width} x {height}");
+            Console.WriteLine($"Chip Dimensions: {width} x {height}");
             Console.WriteLine($"Number of Defects: {defectCount}");
 
             for (int i = 0; i < defectCount; i++)
