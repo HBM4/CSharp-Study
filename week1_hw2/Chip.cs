@@ -106,7 +106,7 @@ namespace week1_hw2
             defects[defectCount] = defect;
             defectCount++;
 
-            Console.WriteLine($"Log: {chipID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");)
+            Console.WriteLine($"Log: {chipID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");
         }
 
         // index에 해당하는 결함을 반환하는 메서드
@@ -154,7 +154,7 @@ namespace week1_hw2
             Console.WriteLine("========================");
             Console.WriteLine($"Chip ID: {chipID}");
             Console.WriteLine($"Chip Dimensions: {width} x {height}");
-            Console.WriteLine($"Number of Defects: {defectCount}");
+            Console.WriteLine($"총 결함 수: {defectCount}");
 
             for (int i = 0; i < defectCount; i++)
             {

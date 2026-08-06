@@ -12,7 +12,7 @@ namespace week1_hw2
     {
         private double x, y; // 결함 중심의 X, Y 좌표
         private double width, height; // 결함 박스의 가로, 세로 크기
-        private DefectType defectType;
+        private DefectType defectType; // 결함의 종류
 
 
         // x, y, width, height, type을 모두 전달받아 초기화하는 생성자
