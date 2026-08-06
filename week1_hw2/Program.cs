@@ -146,9 +146,12 @@ namespace week1_hw2
                 case "Particle":
                     type = DefectType.Particle;
                     break;
-                default:
+                case "Short":
                     type = DefectType.Short;
                     break;
+                default:
+                    Console.WriteLine("Error: 추가 실패. 유효하지 않은 DefectType입니다.");
+                    return;
             }
 
             Defect defect = new Defect(x, y, defectWidth, defectHeight, type);
