@@ -8,7 +8,7 @@ namespace week1_hw2
 {
     internal class Chip
     {
-        private string chipID; // 칩의 고유 ID
+        private string chipID; // 칩의 ID (사용자 마음대로)
         private double chipWidth, chipHeight; // 칩의 가로, 세로 크기
         private Defect[] defects; // 칩에 존재하는 결함들을 저장하는 배열
         private int defectCount; // 현재 칩에 존재하는 결함의 수
