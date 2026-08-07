@@ -8,10 +8,10 @@ namespace week1_hw2
 {
     internal class Chip
     {
-        private string chipID; // 칩의 ID (사용자 마음대로)
-        private double chipWidth, chipHeight; // 칩의 가로, 세로 크기
-        private Defect[] defects; // 칩에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
-        private int defectCount; // 현재 칩에 존재하는 결함의 수
+        private string chipID; // 칩의 ID (사용자 마음대로)|
+        private double chipWidth, chipHeight; // 칩 이미지의 가로, 세로 크기
+        private Defect[] defects; // 칩 이미지에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
+        private int defectCount; // 현재 칩 이미지에 존재하는 결함의 수
 
         // chipID, chipWidth, chipHeight를 전달받아 초기화하는 생성자
         // 추후 File I/O나 이미지 처리 가능하면 chipWidth, chipHeight 자동 처리로 수정
