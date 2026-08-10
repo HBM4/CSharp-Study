@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch25_Generics", "Ch25_Gener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch25_Dictionary", "Ch25_Dictionary\Ch25_Dictionary.csproj", "{D371BF17-F0E1-47E7-9B8E-6D9CD9EFCA78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch29_Files", "Ch29_Files\Ch29_Files.csproj", "{996AC571-C28B-43E9-98E0-BED0245F5B7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,10 @@ Global
 		{D371BF17-F0E1-47E7-9B8E-6D9CD9EFCA78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D371BF17-F0E1-47E7-9B8E-6D9CD9EFCA78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D371BF17-F0E1-47E7-9B8E-6D9CD9EFCA78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{996AC571-C28B-43E9-98E0-BED0245F5B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{996AC571-C28B-43E9-98E0-BED0245F5B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{996AC571-C28B-43E9-98E0-BED0245F5B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{996AC571-C28B-43E9-98E0-BED0245F5B7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
