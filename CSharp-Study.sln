@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "week1_hw2", "week1_hw2\week
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch19_P129", "Ch19_P129\Ch19_P129.csproj", "{59F8C79D-892B-4D4B-B2EE-714F65137929}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch22_Polygon", "Ch22_Polygon\Ch22_Polygon.csproj", "{029A5CDB-3D19-4875-BBB5-695768796E3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{59F8C79D-892B-4D4B-B2EE-714F65137929}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59F8C79D-892B-4D4B-B2EE-714F65137929}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59F8C79D-892B-4D4B-B2EE-714F65137929}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029A5CDB-3D19-4875-BBB5-695768796E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029A5CDB-3D19-4875-BBB5-695768796E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029A5CDB-3D19-4875-BBB5-695768796E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029A5CDB-3D19-4875-BBB5-695768796E3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
