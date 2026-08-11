@@ -17,8 +17,7 @@ namespace week2_hw2
 
     internal class Program
     {
-        static Die[] dies = new Die[100]; // 다이 객체를 저장할 배열
-        static int dieCount = 0; // 현재 저장된 다이 개수
+        static List<Die> dies = new List<Die>(); // 다이 객체를 저장할 리스트
 
         static void Main(string[] args)
         {
@@ -48,11 +47,11 @@ namespace week2_hw2
         // dieID로 다이를 찾는 메서드 (없으면 null 반환)
         static Die FindDie(string dieID)
         {
-            for (int i = 0; i < dieCount; i++)
+            foreach (Die die in dies)
             {
-                if (dies[i].DieID == dieID)
+                if (die.DieID == dieID)
                 {
-                    return dies[i];
+                    return die;
                 }
             }
 
@@ -67,8 +66,7 @@ namespace week2_hw2
             int dieWidth = Convert.ToInt32(words[2]);
             int dieHeight = Convert.ToInt32(words[3]);
 
-            dies[dieCount] = new Die(dieID, dieWidth, dieHeight);
-            dieCount++;
+            dies.Add(new Die(dieID, dieWidth, dieHeight)); // Add: 리스트에 다이 추가
 
             Console.WriteLine($"Log: {dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
         }
@@ -80,7 +78,7 @@ namespace week2_hw2
             string dieID = words[1]; // 제거할 다이의 ID (dieID)
 
             int index = -1;
-            for (int i = 0; i < dieCount; i++)
+            for (int i = 0; i < dies.Count; i++)
             {
                 if (dies[i].DieID == dieID)
                 {
@@ -95,14 +93,7 @@ namespace week2_hw2
                 return;
             }
 
-            // 다이 제거 후 배열을 재정렬
-            for (int i = index; i < dieCount - 1; i++)
-            {
-                dies[i] = dies[i + 1]; // 한 칸씩 앞으로 이동
-            }
-
-            dies[dieCount - 1] = null; // 마지막 요소를 null로 설정
-            dieCount--;
+            dies.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
             Console.WriteLine($"Log: {dieID} 다이를 제거함.");
         }

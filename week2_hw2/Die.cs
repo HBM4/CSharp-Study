@@ -8,11 +8,15 @@ namespace week2_hw2
 {
     internal class Die
     {
-        private Defect[] defects; // 다이 이미지에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
+        private List<Defect> defects; // 다이 이미지에 존재하는 결함들을 저장하는 리스트
+
         public string DieID { get; } // 다이의 ID (사용자 마음대로)
         public int Width { get; } // 다이 이미지의 가로 픽셀 크기
         public int Height { get; } // 다이 이미지의 세로 픽셀 크기
-        public int DefectCount { get; set; } // 현재 다이 이미지에 존재하는 결함의 수 (외부에서는 읽기만 가능)
+        public int DefectCount // 다이 이미지에 존재하는 결함의 개수
+        { 
+            get { return defects.Count; }
+        } 
 
         // dieID, dieWidth, dieHeight를 전달받아 초기화하는 생성자
         // 추후 File I/O나 이미지 처리 가능하면 dieWidth, dieHeight 자동 처리로 수정
@@ -21,8 +25,7 @@ namespace week2_hw2
             DieID = dieID;
             Width = width;
             Height = height;
-            defects = new Defect[100]; // 다이 당 최대 100개의 결함 저장 (나중에 무한 확장 가능?)
-            DefectCount = 0;
+            defects = new List<Defect>(); // 결함 개수 제한 없이 저장
         }
 
         // Die에 Defect 추가하는 메서드
@@ -40,16 +43,7 @@ namespace week2_hw2
                 return;
             }
 
-            // 최대 결함 수 초과 확인 (무한 배열일 시 수정 필요)
-            if (DefectCount >= defects.Length)
-            {
-                Console.WriteLine($"Error: 추가 실패. 추가 가능한 결함 수를 초과함. (최대 {defects.Length}개)");
-                return;
-            }
-
-            // 결함 배열에 추가
-            defects[DefectCount] = defect;
-            DefectCount++;
+            defects.Add(defect); // Add: 리스트에 결함 추가
 
             Console.WriteLine($"Log: {DieID}에 {DefectCount}번째 결함을 추가함. (Type={defect.Type}, X=[{minX}, {maxX}], Y=[{minY}, {maxY}])");
         }
@@ -75,14 +69,7 @@ namespace week2_hw2
                 return;
             }
 
-            // 결함 제거 후 배열을 재정렬
-            for (int i = index; i < DefectCount - 1; i++)
-            {
-                defects[i] = defects[i + 1]; // 한 칸씩 앞으로 이동
-            }
-
-            defects[DefectCount - 1] = null; // 마지막 요소를 null로 설정
-            DefectCount--;
+            defects.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
             Console.WriteLine($"Log: {index + 1}번째 결함을 제거함.");
         }
