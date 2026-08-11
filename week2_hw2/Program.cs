@@ -128,26 +128,26 @@ namespace week2_hw2
 
             switch (words[6]) // 결함 타입 문자열을 DefectType enum으로 변환
             {
-                case "Pit":
-                    type = DefectType.Pit;
+                case "Bright":
+                    type = DefectType.Bright;
                     break;
-                case "Discolor":
-                    type = DefectType.Discolor;
+                case "Dark":
+                    type = DefectType.Dark;
+                    break;
+                case "Stain":
+                    type = DefectType.Stain;
                     break;
                 case "Scratch":
                     type = DefectType.Scratch;
                     break;
-                case "Void":
-                    type = DefectType.Void;
-                    break;
-                case "Crack":
-                    type = DefectType.Crack;
-                    break;
                 case "Particle":
                     type = DefectType.Particle;
                     break;
-                case "Short":
-                    type = DefectType.Short;
+                case "Open":
+                    type = DefectType.Open;
+                    break;
+                case "Bridge":
+                    type = DefectType.Bridge;
                     break;
                 default:
                     Console.WriteLine("Error: 추가 실패. 유효하지 않은 DefectType입니다.");
