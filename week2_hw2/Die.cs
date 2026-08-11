@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +73,50 @@ namespace week2_hw2
             defects.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
             Console.WriteLine($"Log: {index + 1}번째 결함을 제거함.");
+        }
+
+        // 결함 박스가 차지하는 픽셀을 1로, 나머지를 0으로 표시한 격자를 파일로 저장하는 메서드
+        public void ExportDefectMask(string filePath)
+        {
+            int[,] mask = new int[Height, Width]; // 모든 칸이 기본값 0으로 시작함
+
+            foreach (Defect defect in defects)
+            {
+                for (int row = defect.MinY; row <= defect.MaxY; row++)
+                {
+                    if (row < 0 || row >= Height) // 다이 경계를 벗어난 결함 박스는 무시
+                        continue;
+
+                    for (int col = defect.MinX; col <= defect.MaxX; col++)
+                    {
+                        if (col < 0 || col >= Width)
+                            continue;
+
+                        // 박스의 맨 윗줄/맨 아랫줄/왼쪽 끝/오른쪽 끝(테두리)에 해당하는 픽셀만 1 표시
+                        if (row == defect.MinY || row == defect.MaxY || col == defect.MinX || col == defect.MaxX)
+                            mask[row, col] = 1;
+                    }
+                }
+            }
+
+            // 한 줄(row)마다 픽셀 값을 탭 문자로 이어붙여서 파일에 쓸 문자열 배열 생성
+            // 탭으로 구분해야 엑셀에 붙여넣었을 때 칸(cell)이 자동으로 나뉨 (쉼표는 한 셀에 통째로 들어감!)
+            string[] lines = new string[Height];
+            for (int row = 0; row < Height; row++)
+            {
+                string line = "";
+                for (int col = 0; col < Width; col++)
+                {
+                    line += mask[row, col];
+                    if (col < Width - 1)
+                        line += "\t";
+                }
+                lines[row] = line;
+            }
+
+            File.WriteAllLines(filePath, lines);
+
+            Console.WriteLine($"Log: {DieID}의 결함 박스 마스크를 {filePath}에 저장함.");
         }
 
         // Die 정보 출력하는 메서드

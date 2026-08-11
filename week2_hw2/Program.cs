@@ -12,6 +12,7 @@ namespace week2_hw2
     add_defect dieID minX maxX minY maxY defectType
     remove_defect dieID index
     print dieID
+    export_mask dieID filePath
     exit
     */
 
@@ -37,6 +38,8 @@ namespace week2_hw2
                     RemoveDefect(words);
                 else if (words[0] == "print")
                     Print(words);
+                else if (words[0] == "export_mask")
+                    ExportMask(words);
                 else if (words[0] == "exit")
                     break;
             }
@@ -179,6 +182,23 @@ namespace week2_hw2
             }
 
             die.PrintDieInfo(); // 다이 정보 출력
+        }
+
+        // > export_mask dieID filePath
+        // dieID에 해당하는 다이의 결함 박스 마스크를 filePath 파일로 저장
+        static void ExportMask(string[] words)
+        {
+            string dieID = words[1]; // 저장할 결함 박스 마스크가 있는 다이의 ID (dieID)
+            Die die = FindDie(dieID);
+
+            if (die == null)
+            {
+                Console.WriteLine("Error: 저장 실패. 존재하지 않는 dieID입니다.");
+                return;
+            }
+
+            string filePath = words[2]; // 저장할 파일 경로 (filePath)
+            die.ExportDefectMask(filePath); // 결함 박스 마스크 파일로 저장
         }
     }
 }
