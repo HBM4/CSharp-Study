@@ -10,57 +10,41 @@ namespace week2_hw2
 
     internal class Defect
     {
-        private double x, y; // 결함 중심의 X, Y 좌표
-        private double defectWidth, defectHeight; // 결함 박스의 가로, 세로 크기
+        private double minX, maxX, minY, maxY; // 결함 박스의 좌우상하 경계 좌표
         private DefectType defectType; // 결함의 종류
 
-
-        // x, y, defectWidth, defectHeight, type을 모두 전달받아 초기화하는 생성자
+        // 중심좌표(x, y)와 크기(width, height)를 전달받아, 경계 좌표(min/max)로 변환해 저장하는 생성자
         public Defect(double x, double y, double width, double height, DefectType defectType)
         {
-            this.x = x;
-            this.y = y;
-            this.defectWidth = width;
-            this.defectHeight = height;
+            this.minX = x - width / 2;
+            this.maxX = x + width / 2;
+            this.minY = y - height / 2;
+            this.maxY = y + height / 2;
             this.defectType = defectType;
         }
 
-        // x 좌표 Get 메서드
-        public double GetX()
+        // minX Get 메서드
+        public double GetMinX()
         {
-            return x;
+            return minX;
         }
 
-        // y 좌표 Get 메서드
-        public double GetY()
+        // maxX Get 메서드
+        public double GetMaxX()
         {
-            return y;
+            return maxX;
         }
 
-        // x & y 좌표 Set 메서드
-        public void SetCoordinates(double x, double y)
+        // minY Get 메서드
+        public double GetMinY()
         {
-            this.x = x;
-            this.y = y;
+            return minY;
         }
 
-        // defectWidth Get 메서드
-        public double GetWidth()
+        // maxY Get 메서드
+        public double GetMaxY()
         {
-            return defectWidth;
-        }
-
-        // defectHeight Get 메서드
-        public double GetHeight()
-        {
-            return defectHeight;
-        }
-
-        // defectWidth & defectHeight Set 메서드
-        public void SetSize(double width, double height)
-        {
-            this.defectWidth = width;
-            this.defectHeight = height;
+            return maxY;
         }
 
         // defectType Get 메서드
