@@ -10,53 +10,21 @@ namespace week2_hw2
 
     internal class Defect
     {
-        private int minX, maxX, minY, maxY; // 결함 박스의 좌우상하 경계 픽셀 좌표
-        private DefectType defectType; // 결함의 종류
+        public int MinX { get; } // 결함 박스의 좌측 경계 x 좌표
+        public int MaxX { get; } // 결함 박스의 우측 경계 x 좌표
+        public int MinY { get; } // 결함 박스의 하단 경계 y 좌표
+        public int MaxY { get; } // 결함 박스의 상단 경계 y 좌표
+        public DefectType Type { get; } // 결함의 종류
 
-        // 결함 박스의 경계 좌표(min/max)를 직접 전달받아 저장하는 생성자
-        public Defect(int minX, int maxX, int minY, int maxY, DefectType defectType)
+        // 결함 박스의 경계 좌표(min/max)와 종류를 전달받아 저장하는 생성자
+        // 생성 이후에는 값이 바뀌지 않으므로 읽기 전용 프로퍼티로 선언함
+        public Defect(int minX, int maxX, int minY, int maxY, DefectType type)
         {
-            this.minX = minX;
-            this.maxX = maxX;
-            this.minY = minY;
-            this.maxY = maxY;
-            this.defectType = defectType;
-        }
-
-        // minX Get 메서드
-        public int GetMinX()
-        {
-            return minX;
-        }
-
-        // maxX Get 메서드
-        public int GetMaxX()
-        {
-            return maxX;
-        }
-
-        // minY Get 메서드
-        public int GetMinY()
-        {
-            return minY;
-        }
-
-        // maxY Get 메서드
-        public int GetMaxY()
-        {
-            return maxY;
-        }
-
-        // defectType Get 메서드
-        public DefectType GetDefectType()
-        {
-            return defectType;
-        }
-
-        // defectType Set 메서드
-        public void SetDefectType(DefectType defectType)
-        {
-            this.defectType = defectType;
+            MinX = minX;
+            MaxX = maxX;
+            MinY = minY;
+            MaxY = maxY;
+            Type = type;
         }
     }
 }

@@ -17,8 +17,8 @@ namespace week2_hw2
 
     internal class Program
     {
-        static Die[] dies = new Die[100];
-        static int dieCount = 0;
+        static Die[] dies = new Die[100]; // 다이 객체를 저장할 배열
+        static int dieCount = 0; // 현재 저장된 다이 개수
 
         static void Main(string[] args)
         {
@@ -50,7 +50,7 @@ namespace week2_hw2
         {
             for (int i = 0; i < dieCount; i++)
             {
-                if (dies[i].GetDieID() == dieID)
+                if (dies[i].DieID == dieID)
                 {
                     return dies[i];
                 }
@@ -63,7 +63,7 @@ namespace week2_hw2
         // dieID, dieWidth, dieHeight를 전달받아 다이 생성
         static void CreateDie(string[] words)
         {
-            string dieID = words[1];
+            string dieID = words[1]; // 생성할 다이의 ID (dieID)
             int dieWidth = Convert.ToInt32(words[2]);
             int dieHeight = Convert.ToInt32(words[3]);
 
@@ -77,12 +77,12 @@ namespace week2_hw2
         // dieID에 해당하는 다이 제거
         static void RemoveDie(string[] words)
         {
-            string dieID = words[1];
+            string dieID = words[1]; // 제거할 다이의 ID (dieID)
 
             int index = -1;
             for (int i = 0; i < dieCount; i++)
             {
-                if (dies[i].GetDieID() == dieID)
+                if (dies[i].DieID == dieID)
                 {
                     index = i;
                     break;
@@ -111,7 +111,7 @@ namespace week2_hw2
         // dieID에 해당하는 다이에 결함 추가
         static void AddDefect(string[] words)
         {
-            string dieID = words[1];
+            string dieID = words[1]; // 결함을 추가할 다이의 ID (dieID)
             Die die = FindDie(dieID);
 
             if (die == null)
@@ -120,10 +120,10 @@ namespace week2_hw2
                 return;
             }
 
-            int minX = Convert.ToInt32(words[2]); // 결함 박스 좌측 경계 x 좌표
-            int maxX = Convert.ToInt32(words[3]); // 결함 박스 우측 경계 x 좌표
-            int minY = Convert.ToInt32(words[4]); // 결함 박스 하단 경계 y 좌표
-            int maxY = Convert.ToInt32(words[5]); // 결함 박스 상단 경계 y 좌표
+            int minX = Convert.ToInt32(words[2]); // 결함 박스 좌측 경계 x 좌표 (minX)
+            int maxX = Convert.ToInt32(words[3]); // 결함 박스 우측 경계 x 좌표 (maxX)
+            int minY = Convert.ToInt32(words[4]); // 결함 박스 하단 경계 y 좌표 (minY)
+            int maxY = Convert.ToInt32(words[5]); // 결함 박스 상단 경계 y 좌표 (maxY)
             DefectType type; // 결함 타입
 
             switch (words[6]) // 결함 타입 문자열을 DefectType enum으로 변환
@@ -162,7 +162,7 @@ namespace week2_hw2
         // dieID에 해당하는 다이에서 index 번째 결함 제거
         static void RemoveDefect(string[] words)
         {
-            string dieID = words[1];
+            string dieID = words[1]; // 제거할 결함이 있는 다이의 ID (dieID)
             Die die = FindDie(dieID);
 
             if (die == null)
@@ -178,7 +178,7 @@ namespace week2_hw2
         // dieID에 해당하는 다이의 정보 출력
         static void Print(string[] words)
         {
-            string dieID = words[1];
+            string dieID = words[1]; // 출력할 다이의 ID (dieID)
             Die die = FindDie(dieID);
 
             if (die == null)
