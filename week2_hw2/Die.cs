@@ -33,12 +33,12 @@ namespace week2_hw2
         public void AddDefect(Defect defect)
         {
             // 결함 박스가 다이 경계를 벗어나는지 확인
-            int minX = defect.MinX;
-            int maxX = defect.MaxX;
-            int minY = defect.MinY;
-            int maxY = defect.MaxY;
+            int x1 = defect.X1;
+            int y1 = defect.Y1;
+            int x2 = defect.X2;
+            int y2 = defect.Y2;
 
-            if (minX < 0 || maxX > Width || minY < 0 || maxY > Height)
+            if (x1 < 0 || x2 > Width || y1 < 0 || y2 > Height)
             {
                 Console.WriteLine("Error: 추가 실패. 결함 박스가 다이 경계를 벗어남.");
                 return;
@@ -46,7 +46,7 @@ namespace week2_hw2
 
             defects.Add(defect); // Add: 리스트에 결함 추가
 
-            Console.WriteLine($"Log: {DieID}에 {DefectCount}번째 결함을 추가함. (Type={defect.Type}, X=[{minX}, {maxX}], Y=[{minY}, {maxY}])");
+            Console.WriteLine($"Log: {DieID}에 {DefectCount}번째 결함을 추가함. (Type={defect.Type}, X1={x1}, Y1={y1}, X2={x2}, Y2={y2})");
         }
 
         // Die에 Defect 조회하는 메서드
@@ -82,18 +82,18 @@ namespace week2_hw2
 
             foreach (Defect defect in defects)
             {
-                for (int row = defect.MinY; row <= defect.MaxY; row++)
+                for (int row = defect.Y1; row <= defect.Y2; row++)
                 {
                     if (row < 0 || row >= Height) // 다이 경계를 벗어난 결함 박스는 무시
                         continue;
 
-                    for (int col = defect.MinX; col <= defect.MaxX; col++)
+                    for (int col = defect.X1; col <= defect.X2; col++)
                     {
                         if (col < 0 || col >= Width)
                             continue;
 
                         // 박스의 맨 윗줄/맨 아랫줄/왼쪽 끝/오른쪽 끝(테두리)에 해당하는 픽셀만 1 표시
-                        if (row == defect.MinY || row == defect.MaxY || col == defect.MinX || col == defect.MaxX)
+                        if (row == defect.Y1 || row == defect.Y2 || col == defect.X1 || col == defect.X2)
                             mask[row, col] = 1;
                     }
                 }
@@ -130,7 +130,7 @@ namespace week2_hw2
             for (int i = 0; i < DefectCount; i++)
             {
                 Defect defect = defects[i];
-                Console.WriteLine($"└ Defect {i}: Type={defect.Type}, X=[{defect.MinX}, {defect.MaxX}], Y=[{defect.MinY}, {defect.MaxY}]");
+                Console.WriteLine($"└ Defect {i}: Type={defect.Type}, X1={defect.X1}, Y1={defect.Y1}, X2={defect.X2}, Y2={defect.Y2}");
             }
             Console.WriteLine("========================");
         }

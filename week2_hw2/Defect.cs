@@ -19,20 +19,20 @@ namespace week2_hw2
 
     internal class Defect
     {
-        public int MinX { get; } // 결함 박스의 좌측 경계 x 좌표
-        public int MaxX { get; } // 결함 박스의 우측 경계 x 좌표
-        public int MinY { get; } // 결함 박스의 하단 경계 y 좌표
-        public int MaxY { get; } // 결함 박스의 상단 경계 y 좌표
+        public int X1 { get; } // 결함 박스의 첫 번째 꼭짓점 x 좌표
+        public int Y1 { get; } // 결함 박스의 첫 번째 꼭짓점 y 좌표
+        public int X2 { get; } // 결함 박스의 두 번째 꼭짓점 x 좌표
+        public int Y2 { get; } // 결함 박스의 두 번째 꼭짓점 y 좌표
         public DefectType Type { get; } // 결함의 종류
 
-        // 결함 박스의 경계 좌표(min/max)와 종류를 전달받아 저장하는 생성자
+        // 결함 박스의 두 꼭짓점 좌표((x1,y1), (x2,y2))와 종류를 전달받아 저장하는 생성자
         // 생성 이후에는 값이 바뀌지 않으므로 읽기 전용 프로퍼티로 선언함
-        public Defect(int minX, int maxX, int minY, int maxY, DefectType type)
+        public Defect(int x1, int y1, int x2, int y2, DefectType type)
         {
-            MinX = minX;
-            MaxX = maxX;
-            MinY = minY;
-            MaxY = maxY;
+            X1 = x1;
+            Y1 = y1;
+            X2 = x2;
+            Y2 = y2;
             Type = type;
         }
     }
