@@ -10,11 +10,11 @@ namespace week2_hw2
 
     internal class Defect
     {
-        private double minX, maxX, minY, maxY; // 결함 박스의 좌우상하 경계 좌표
+        private int minX, maxX, minY, maxY; // 결함 박스의 좌우상하 경계 픽셀 좌표
         private DefectType defectType; // 결함의 종류
 
         // 중심좌표(x, y)와 크기(width, height)를 전달받아, 경계 좌표(min/max)로 변환해 저장하는 생성자
-        public Defect(double x, double y, double width, double height, DefectType defectType)
+        public Defect(int x, int y, int width, int height, DefectType defectType)
         {
             this.minX = x - width / 2;
             this.maxX = x + width / 2;
@@ -24,25 +24,25 @@ namespace week2_hw2
         }
 
         // minX Get 메서드
-        public double GetMinX()
+        public int GetMinX()
         {
             return minX;
         }
 
         // maxX Get 메서드
-        public double GetMaxX()
+        public int GetMaxX()
         {
             return maxX;
         }
 
         // minY Get 메서드
-        public double GetMinY()
+        public int GetMinY()
         {
             return minY;
         }
 
         // maxY Get 메서드
-        public double GetMaxY()
+        public int GetMaxY()
         {
             return maxY;
         }

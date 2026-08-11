@@ -9,13 +9,13 @@ namespace week2_hw2
     internal class Die
     {
         private string dieID; // 다이의 ID (사용자 마음대로)|
-        private double dieWidth, dieHeight; // 다이 이미지의 가로, 세로 크기
+        private int dieWidth, dieHeight; // 다이 이미지의 가로, 세로 픽셀 크기
         private Defect[] defects; // 다이 이미지에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
         private int defectCount; // 현재 다이 이미지에 존재하는 결함의 수
 
         // dieID, dieWidth, dieHeight를 전달받아 초기화하는 생성자
         // 추후 File I/O나 이미지 처리 가능하면 dieWidth, dieHeight 자동 처리로 수정
-        public Die(string dieID, double width, double height)
+        public Die(string dieID, int width, int height)
         {
             this.dieID = dieID;
             this.dieWidth = width;
@@ -37,19 +37,19 @@ namespace week2_hw2
         }
 
         // dieWidth Get 메서드
-        public double GetWidth()
+        public int GetWidth()
         {
             return dieWidth;
         }
 
         // dieHeight Get 메서드
-        public double GetHeight()
+        public int GetHeight()
         {
             return dieHeight;
         }
 
         // dieWidth, dieHeight Set 메서드
-        public void SetSize(double width, double height)
+        public void SetSize(int width, int height)
         {
             this.dieWidth = width;
             this.dieHeight = height;
@@ -59,10 +59,10 @@ namespace week2_hw2
         public void AddDefect(Defect defect)
         {
             // 결함 박스가 다이 경계를 벗어나는지 확인
-            double minX = defect.GetMinX();
-            double maxX = defect.GetMaxX();
-            double minY = defect.GetMinY();
-            double maxY = defect.GetMaxY();
+            int minX = defect.GetMinX();
+            int maxX = defect.GetMaxX();
+            int minY = defect.GetMinY();
+            int maxY = defect.GetMaxY();
 
             if (minX < 0 || maxX > dieWidth || minY < 0 || maxY > dieHeight)
             {
@@ -134,10 +134,10 @@ namespace week2_hw2
             for (int i = 0; i < defectCount; i++)
             {
                 Defect defect = defects[i];
-                double minX = defect.GetMinX();
-                double maxX = defect.GetMaxX();
-                double minY = defect.GetMinY();
-                double maxY = defect.GetMaxY();
+                int minX = defect.GetMinX();
+                int maxX = defect.GetMaxX();
+                int minY = defect.GetMinY();
+                int maxY = defect.GetMaxY();
                 Console.WriteLine($"└ Defect {i}: Type={defect.GetDefectType()}, X=[{minX}, {maxX}], Y=[{minY}, {maxY}]");
             }
             Console.WriteLine("========================");

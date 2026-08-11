@@ -64,8 +64,8 @@ namespace week2_hw2
         static void CreateDie(string[] words)
         {
             string dieID = words[1];
-            double dieWidth = Convert.ToDouble(words[2]);
-            double dieHeight = Convert.ToDouble(words[3]);
+            int dieWidth = Convert.ToInt32(words[2]);
+            int dieHeight = Convert.ToInt32(words[3]);
 
             dies[dieCount] = new Die(dieID, dieWidth, dieHeight);
             dieCount++;
@@ -120,10 +120,10 @@ namespace week2_hw2
                 return;
             }
 
-            double x = Convert.ToDouble(words[2]); // 결함 박스 중앙 x 좌표
-            double y = Convert.ToDouble(words[3]); // 결함 박스 중앙 y 좌표
-            double defectWidth = Convert.ToDouble(words[4]); // 결함 박스 width
-            double defectHeight = Convert.ToDouble(words[5]); // 결함 박스 height
+            int x = Convert.ToInt32(words[2]); // 결함 박스 중앙 x 좌표
+            int y = Convert.ToInt32(words[3]); // 결함 박스 중앙 y 좌표
+            int defectWidth = Convert.ToInt32(words[4]); // 결함 박스 width
+            int defectHeight = Convert.ToInt32(words[5]); // 결함 박스 height
             DefectType type; // 결함 타입
 
             switch (words[6]) // 결함 타입 문자열을 DefectType enum으로 변환
