@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch30_GetNumberFromUser", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch32_MathDelegate", "Ch32_MathDelegate\Ch32_MathDelegate.csproj", "{A8C4A150-A8E1-4CB3-9DAA-5FF4650AE147}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch32_LogEvent", "Ch32_LogEvent\Ch32_LogEvent.csproj", "{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +221,10 @@ Global
 		{A8C4A150-A8E1-4CB3-9DAA-5FF4650AE147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8C4A150-A8E1-4CB3-9DAA-5FF4650AE147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8C4A150-A8E1-4CB3-9DAA-5FF4650AE147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
