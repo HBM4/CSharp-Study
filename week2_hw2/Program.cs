@@ -9,7 +9,7 @@ namespace week2_hw2
     /*
     create_die dieID dieWidth dieHeight
     remove_die dieID
-    add_defect dieID x y defectWidth defectHeight defectType
+    add_defect dieID minX maxX minY maxY defectType
     remove_defect dieID index
     print dieID
     exit
@@ -107,7 +107,7 @@ namespace week2_hw2
             Console.WriteLine($"Log: {dieID} 다이를 제거함.");
         }
 
-        // > add_defect dieID x y defectWidth defectHeight defectType
+        // > add_defect dieID minX maxX minY maxY defectType
         // dieID에 해당하는 다이에 결함 추가
         static void AddDefect(string[] words)
         {
@@ -120,10 +120,10 @@ namespace week2_hw2
                 return;
             }
 
-            int x = Convert.ToInt32(words[2]); // 결함 박스 중앙 x 좌표
-            int y = Convert.ToInt32(words[3]); // 결함 박스 중앙 y 좌표
-            int defectWidth = Convert.ToInt32(words[4]); // 결함 박스 width
-            int defectHeight = Convert.ToInt32(words[5]); // 결함 박스 height
+            int minX = Convert.ToInt32(words[2]); // 결함 박스 좌측 경계 x 좌표
+            int maxX = Convert.ToInt32(words[3]); // 결함 박스 우측 경계 x 좌표
+            int minY = Convert.ToInt32(words[4]); // 결함 박스 하단 경계 y 좌표
+            int maxY = Convert.ToInt32(words[5]); // 결함 박스 상단 경계 y 좌표
             DefectType type; // 결함 타입
 
             switch (words[6]) // 결함 타입 문자열을 DefectType enum으로 변환
@@ -154,7 +154,7 @@ namespace week2_hw2
                     return;
             }
 
-            Defect defect = new Defect(x, y, defectWidth, defectHeight, type);
+            Defect defect = new Defect(minX, maxX, minY, maxY, type);
             die.AddDefect(defect); // 다이에 결함 추가
         }
 
