@@ -402,3 +402,6 @@ FodyWeavers.xsd
 
 # Local test project
 test/
+
+# GitHub configuration folder
+.github/

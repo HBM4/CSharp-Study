@@ -75,6 +75,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch32_MathDelegate", "Ch32_M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch32_LogEvent", "Ch32_LogEvent\Ch32_LogEvent.csproj", "{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch33_Events", "Ch33_Events\Ch33_Events.csproj", "{D1CF465E-90BA-42C2-9064-17B9FF5EEF53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "week2_hw2", "week2_hw2\week2_hw2.csproj", "{597279C1-EC97-4EF7-B484-59D8DC45F63E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +229,14 @@ Global
 		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34BAC5CD-FCA5-4760-B04A-49A5D371A3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1CF465E-90BA-42C2-9064-17B9FF5EEF53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1CF465E-90BA-42C2-9064-17B9FF5EEF53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1CF465E-90BA-42C2-9064-17B9FF5EEF53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1CF465E-90BA-42C2-9064-17B9FF5EEF53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{597279C1-EC97-4EF7-B484-59D8DC45F63E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597279C1-EC97-4EF7-B484-59D8DC45F63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597279C1-EC97-4EF7-B484-59D8DC45F63E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597279C1-EC97-4EF7-B484-59D8DC45F63E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
