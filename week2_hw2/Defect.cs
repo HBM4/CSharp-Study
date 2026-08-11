@@ -6,73 +6,34 @@ using System.Threading.Tasks;
 
 namespace week2_hw2
 {
-    public enum DefectType { Pit, Discolor, Scratch, Void, Crack, Particle, Short } // 결함의 종류
+    public enum DefectType
+    {
+        Bright, // 명불량 (주변보다 밝은 픽셀 - 이물, 반사체 등)
+        Dark, // 암불량 (주변보다 어두운 픽셀 - 이물, Pit 등)
+        Stain, // 넓은 영역의 완만한 명암/색상 편차 (Stain / Discolor)
+        Scratch, // 선형 결함 (Aspect Ratio가 매우 큰 형태)
+        Particle, // 고립된 형태의 구형/Blob 이물질 (Particle)
+        Open, // 회로 패턴 끊어짐
+        Bridge // 회로 패턴 맞붙음
+    }
 
     internal class Defect
     {
-        private double x, y; // 결함 중심의 X, Y 좌표
-        private double defectWidth, defectHeight; // 결함 박스의 가로, 세로 크기
-        private DefectType defectType; // 결함의 종류
+        public int X1 { get; } // 결함 박스의 첫 번째 꼭짓점 x 좌표
+        public int Y1 { get; } // 결함 박스의 첫 번째 꼭짓점 y 좌표
+        public int X2 { get; } // 결함 박스의 두 번째 꼭짓점 x 좌표
+        public int Y2 { get; } // 결함 박스의 두 번째 꼭짓점 y 좌표
+        public DefectType Type { get; } // 결함의 종류
 
-
-        // x, y, defectWidth, defectHeight, type을 모두 전달받아 초기화하는 생성자
-        public Defect(double x, double y, double width, double height, DefectType defectType)
+        // 결함 박스의 두 꼭짓점 좌표((x1,y1), (x2,y2))와 종류를 전달받아 저장하는 생성자
+        // 생성 이후에는 값이 바뀌지 않으므로 읽기 전용 프로퍼티로 선언함
+        public Defect(int x1, int y1, int x2, int y2, DefectType type)
         {
-            this.x = x;
-            this.y = y;
-            this.defectWidth = width;
-            this.defectHeight = height;
-            this.defectType = defectType;
-        }
-
-        // x 좌표 Get 메서드
-        public double GetX()
-        {
-            return x;
-        }
-
-        // y 좌표 Get 메서드
-        public double GetY()
-        {
-            return y;
-        }
-
-        // x & y 좌표 Set 메서드
-        public void SetCoordinates(double x, double y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        // defectWidth Get 메서드
-        public double GetWidth()
-        {
-            return defectWidth;
-        }
-
-        // defectHeight Get 메서드
-        public double GetHeight()
-        {
-            return defectHeight;
-        }
-
-        // defectWidth & defectHeight Set 메서드
-        public void SetSize(double width, double height)
-        {
-            this.defectWidth = width;
-            this.defectHeight = height;
-        }
-
-        // defectType Get 메서드
-        public DefectType GetDefectType()
-        {
-            return defectType;
-        }
-
-        // defectType Set 메서드
-        public void SetDefectType(DefectType defectType)
-        {
-            this.defectType = defectType;
+            X1 = x1;
+            Y1 = y1;
+            X2 = x2;
+            Y2 = y2;
+            Type = type;
         }
     }
 }

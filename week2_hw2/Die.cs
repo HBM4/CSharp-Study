@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,94 +9,50 @@ namespace week2_hw2
 {
     internal class Die
     {
-        private string dieID; // 다이의 ID (사용자 마음대로)|
-        private double dieWidth, dieHeight; // 다이 이미지의 가로, 세로 크기
-        private Defect[] defects; // 다이 이미지에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
-        private int defectCount; // 현재 다이 이미지에 존재하는 결함의 수
+        private List<Defect> defects; // 다이 이미지에 존재하는 결함들을 저장하는 리스트
+
+        public string DieID { get; } // 다이의 ID (사용자 마음대로)
+        public int Width { get; } // 다이 이미지의 가로 픽셀 크기
+        public int Height { get; } // 다이 이미지의 세로 픽셀 크기
+        public int DefectCount // 다이 이미지에 존재하는 결함의 개수
+        { 
+            get { return defects.Count; }
+        } 
 
         // dieID, dieWidth, dieHeight를 전달받아 초기화하는 생성자
         // 추후 File I/O나 이미지 처리 가능하면 dieWidth, dieHeight 자동 처리로 수정
-        public Die(string dieID, double width, double height)
+        public Die(string dieID, int width, int height)
         {
-            this.dieID = dieID;
-            this.dieWidth = width;
-            this.dieHeight = height;
-            defects = new Defect[100]; // 다이 당 최대 100개의 결함 저장 (나중에 무한 확장 가능?)
-            defectCount = 0;
-        }
-
-        // dieID Get 메서드
-        public string GetDieID()
-        {
-            return dieID;
-        }
-
-        // dieID Set 메서드
-        public void SetDieID(string dieID)
-        {
-            this.dieID = dieID;
-        }
-
-        // dieWidth Get 메서드
-        public double GetWidth()
-        {
-            return dieWidth;
-        }
-
-        // dieHeight Get 메서드
-        public double GetHeight()
-        {
-            return dieHeight;
-        }
-
-        // dieWidth, dieHeight Set 메서드
-        public void SetSize(double width, double height)
-        {
-            this.dieWidth = width;
-            this.dieHeight = height;
+            DieID = dieID;
+            Width = width;
+            Height = height;
+            defects = new List<Defect>(); // 결함 개수 제한 없이 저장
         }
 
         // Die에 Defect 추가하는 메서드
         public void AddDefect(Defect defect)
         {
-            // 결함 중심점 좌표가 다이 경계를 벗어나는지 확인
-            double x = defect.GetX();
-            double y = defect.GetY();
+            // 결함 박스가 다이 경계를 벗어나는지 확인
+            int x1 = defect.X1;
+            int y1 = defect.Y1;
+            int x2 = defect.X2;
+            int y2 = defect.Y2;
 
-            if (x < 0 || x > dieWidth || y < 0 || y > dieHeight)
-            {
-                Console.WriteLine("Error: 추가 실패. 결함 좌표가 다이 경계를 벗어남.");
-                return;
-            }
-
-            // 차지하는 결함 박스가 다이 경계를 벗어나는지 확인
-            double w = defect.GetWidth();
-            double h = defect.GetHeight();
-
-            if (x - w / 2 < 0 || x + w / 2 > dieWidth || y - h / 2 < 0 || y + h / 2 > dieHeight)
+            if (x1 < 0 || x2 > Width || y1 < 0 || y2 > Height)
             {
                 Console.WriteLine("Error: 추가 실패. 결함 박스가 다이 경계를 벗어남.");
                 return;
             }
 
-            // 최대 결함 수 초과 확인 (무한 배열일 시 수정 필요)
-            if (defectCount >= defects.Length)
-            {
-                Console.WriteLine($"Error: 추가 실패. 추가 가능한 결함 수를 초과함. (최대 {defects.Length}개)");
-                return;
-            }
+            defects.Add(defect); // Add: 리스트에 결함 추가
 
-            // 결함 배열에 추가
-            defects[defectCount] = defect;
-            defectCount++;
-
-            Console.WriteLine($"Log: {dieID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");
+            Console.WriteLine($"Log: {DieID}에 {DefectCount}번째 결함을 추가함. (Type={defect.Type}, X1={x1}, Y1={y1}, X2={x2}, Y2={y2})");
         }
 
         // Die에 Defect 조회하는 메서드
         public Defect GetDefect(int index)
         {
-            if (index < 0 || index >= defectCount)
+            if (index < 0 || index >= DefectCount)
             {
                 Console.WriteLine("Error: 조회 실패. 유효하지 않은 결함 인덱스를 입력함.");
                 return null;
@@ -107,46 +64,73 @@ namespace week2_hw2
         // Die에 Defect 제거하는 메서드
         public void RemoveDefect(int index)
         {
-            if (index < 0 || index >= defectCount)
+            if (index < 0 || index >= DefectCount)
             {
                 Console.WriteLine("Error: 삭제 실패. 유효하지 않은 결함 인덱스를 입력함.");
                 return;
             }
 
-            // 결함 제거 후 배열을 재정렬
-            for (int i = index; i < defectCount - 1; i++)
-            {
-                defects[i] = defects[i + 1]; // 한 칸씩 앞으로 이동
-            }
-
-            defects[defectCount - 1] = null; // 마지막 요소를 null로 설정
-            defectCount--;
+            defects.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
             Console.WriteLine($"Log: {index + 1}번째 결함을 제거함.");
         }
 
-        // 다이에 존재하는 결함의 수를 반환하는 메서드
-        public int GetDefectCount()
+        // 결함 박스가 차지하는 픽셀을 1로, 나머지를 0으로 표시한 격자를 파일로 저장하는 메서드
+        public void ExportDefectMask(string filePath)
         {
-            return defectCount;
+            int[,] mask = new int[Height, Width]; // 모든 칸이 기본값 0으로 시작함
+
+            foreach (Defect defect in defects)
+            {
+                for (int row = defect.Y1; row <= defect.Y2; row++)
+                {
+                    if (row < 0 || row >= Height) // 다이 경계를 벗어난 결함 박스는 무시
+                        continue;
+
+                    for (int col = defect.X1; col <= defect.X2; col++)
+                    {
+                        if (col < 0 || col >= Width)
+                            continue;
+
+                        // 박스의 맨 윗줄/맨 아랫줄/왼쪽 끝/오른쪽 끝(테두리)에 해당하는 픽셀만 1 표시
+                        if (row == defect.Y1 || row == defect.Y2 || col == defect.X1 || col == defect.X2)
+                            mask[row, col] = 1;
+                    }
+                }
+            }
+
+            // 한 줄(row)마다 픽셀 값을 탭 문자로 이어붙여서 파일에 쓸 문자열 배열 생성
+            // 탭으로 구분해야 엑셀에 붙여넣었을 때 칸(cell)이 자동으로 나뉨 (쉼표는 한 셀에 통째로 들어감!)
+            string[] lines = new string[Height];
+            for (int row = 0; row < Height; row++)
+            {
+                string line = "";
+                for (int col = 0; col < Width; col++)
+                {
+                    line += mask[row, col];
+                    if (col < Width - 1)
+                        line += "\t";
+                }
+                lines[row] = line;
+            }
+
+            File.WriteAllLines(filePath, lines);
+
+            Console.WriteLine($"Log: {DieID}의 결함 박스 마스크를 {filePath}에 저장함.");
         }
 
         // Die 정보 출력하는 메서드
         public void PrintDieInfo()
         {
             Console.WriteLine("========================");
-            Console.WriteLine($"Die ID: {dieID}");
-            Console.WriteLine($"Die Size: {dieWidth} x {dieHeight}");
-            Console.WriteLine($"총 결함 수: {defectCount}");
+            Console.WriteLine($"Die ID: {DieID}");
+            Console.WriteLine($"Die Size: {Width} x {Height}");
+            Console.WriteLine($"총 결함 수: {DefectCount}");
 
-            for (int i = 0; i < defectCount; i++)
+            for (int i = 0; i < DefectCount; i++)
             {
                 Defect defect = defects[i];
-                double x = defect.GetX();
-                double y = defect.GetY();
-                double w = defect.GetWidth();
-                double h = defect.GetHeight();
-                Console.WriteLine($"└ Defect {i}: Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h})");
+                Console.WriteLine($"└ Defect {i}: Type={defect.Type}, X1={defect.X1}, Y1={defect.Y1}, X2={defect.X2}, Y2={defect.Y2}");
             }
             Console.WriteLine("========================");
         }
