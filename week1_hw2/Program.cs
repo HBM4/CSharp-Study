@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 namespace week1_hw2
 {
     /*
-    create_chip chipID chipWidth chipHeight
-    remove_chip chipID
-    add_defect chipID x y defectWidth defectHeight defectType
-    remove_defect chipID index
-    print chipID
+    create_die dieID dieWidth dieHeight
+    remove_die dieID
+    add_defect dieID x y defectWidth defectHeight defectType
+    remove_defect dieID index
+    print dieID
     exit
     */
 
     internal class Program
     {
-        static Chip[] chips = new Chip[100];
-        static int chipCount = 0;
+        static Die[] dies = new Die[100];
+        static int dieCount = 0;
 
         static void Main(string[] args)
         {
@@ -28,10 +28,10 @@ namespace week1_hw2
                 string text = Console.ReadLine();
                 string[] words = text.Split(' ');
 
-                if (words[0] == "create_chip")
-                    CreateChip(words);
-                else if (words[0] == "remove_chip")
-                    RemoveChip(words);
+                if (words[0] == "create_die")
+                    CreateDie(words);
+                else if (words[0] == "remove_die")
+                    RemoveDie(words);
                 else if (words[0] == "add_defect")
                     AddDefect(words);
                 else if (words[0] == "remove_defect")
@@ -45,44 +45,44 @@ namespace week1_hw2
             Console.WriteLine("Log: 프로그램 종료.");
         }
 
-        // chipID로 칩을 찾는 메서드 (없으면 null 반환)
-        static Chip FindChip(string chipID)
+        // dieID로 다이를 찾는 메서드 (없으면 null 반환)
+        static Die FindDie(string dieID)
         {
-            for (int i = 0; i < chipCount; i++)
+            for (int i = 0; i < dieCount; i++)
             {
-                if (chips[i].GetChipID() == chipID)
+                if (dies[i].GetDieID() == dieID)
                 {
-                    return chips[i];
+                    return dies[i];
                 }
             }
 
             return null;
         }
 
-        // > create_chip chipID chipWidth chipHeight
-        // chipID, chipWidth, chipHeight를 전달받아 칩 생성
-        static void CreateChip(string[] words)
+        // > create_die dieID dieWidth dieHeight
+        // dieID, dieWidth, dieHeight를 전달받아 다이 생성
+        static void CreateDie(string[] words)
         {
-            string chipID = words[1];
-            double chipWidth = Convert.ToDouble(words[2]);
-            double chipHeight = Convert.ToDouble(words[3]);
+            string dieID = words[1];
+            double dieWidth = Convert.ToDouble(words[2]);
+            double dieHeight = Convert.ToDouble(words[3]);
 
-            chips[chipCount] = new Chip(chipID, chipWidth, chipHeight);
-            chipCount++;
+            dies[dieCount] = new Die(dieID, dieWidth, dieHeight);
+            dieCount++;
 
-            Console.WriteLine($"Log: {chipID} 칩을 생성함. (Width={chipWidth}, Height={chipHeight})");
+            Console.WriteLine($"Log: {dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
         }
 
-        // > remove_chip chipID
-        // chipID에 해당하는 칩 제거
-        static void RemoveChip(string[] words)
+        // > remove_die dieID
+        // dieID에 해당하는 다이 제거
+        static void RemoveDie(string[] words)
         {
-            string chipID = words[1];
+            string dieID = words[1];
 
             int index = -1;
-            for (int i = 0; i < chipCount; i++)
+            for (int i = 0; i < dieCount; i++)
             {
-                if (chips[i].GetChipID() == chipID)
+                if (dies[i].GetDieID() == dieID)
                 {
                     index = i;
                     break;
@@ -91,32 +91,32 @@ namespace week1_hw2
 
             if (index == -1)
             {
-                Console.WriteLine("Error: 삭제 실패. 존재하지 않는 chipID입니다.");
+                Console.WriteLine("Error: 삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
-            // 칩 제거 후 배열을 재정렬
-            for (int i = index; i < chipCount - 1; i++)
+            // 다이 제거 후 배열을 재정렬
+            for (int i = index; i < dieCount - 1; i++)
             {
-                chips[i] = chips[i + 1]; // 한 칸씩 앞으로 이동
+                dies[i] = dies[i + 1]; // 한 칸씩 앞으로 이동
             }
 
-            chips[chipCount - 1] = null; // 마지막 요소를 null로 설정
-            chipCount--;
+            dies[dieCount - 1] = null; // 마지막 요소를 null로 설정
+            dieCount--;
 
-            Console.WriteLine($"Log: {chipID} 칩을 제거함.");
+            Console.WriteLine($"Log: {dieID} 다이를 제거함.");
         }
 
-        // > add_defect chipID x y defectWidth defectHeight defectType
-        // chipID에 해당하는 칩에 결함 추가
+        // > add_defect dieID x y defectWidth defectHeight defectType
+        // dieID에 해당하는 다이에 결함 추가
         static void AddDefect(string[] words)
         {
-            string chipID = words[1];
-            Chip chip = FindChip(chipID);
+            string dieID = words[1];
+            Die die = FindDie(dieID);
 
-            if (chip == null)
+            if (die == null)
             {
-                Console.WriteLine("Error: 추가 실패. 존재하지 않는 chipID입니다.");
+                Console.WriteLine("Error: 추가 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
@@ -128,26 +128,26 @@ namespace week1_hw2
 
             switch (words[6]) // 결함 타입 문자열을 DefectType enum으로 변환
             {
-                case "Pit":
-                    type = DefectType.Pit;
+                case "Bright":
+                    type = DefectType.Bright;
                     break;
-                case "Discolor":
-                    type = DefectType.Discolor;
+                case "Dark":
+                    type = DefectType.Dark;
+                    break;
+                case "Stain":
+                    type = DefectType.Stain;
                     break;
                 case "Scratch":
                     type = DefectType.Scratch;
                     break;
-                case "Void":
-                    type = DefectType.Void;
-                    break;
-                case "Crack":
-                    type = DefectType.Crack;
-                    break;
                 case "Particle":
                     type = DefectType.Particle;
                     break;
-                case "Short":
-                    type = DefectType.Short;
+                case "Open":
+                    type = DefectType.Open;
+                    break;
+                case "Bridge":
+                    type = DefectType.Bridge;
                     break;
                 default:
                     Console.WriteLine("Error: 추가 실패. 유효하지 않은 DefectType입니다.");
@@ -155,39 +155,39 @@ namespace week1_hw2
             }
 
             Defect defect = new Defect(x, y, defectWidth, defectHeight, type);
-            chip.AddDefect(defect); // 칩에 결함 추가
+            die.AddDefect(defect); // 다이에 결함 추가
         }
 
-        // > remove_defect chipID index
-        // chipID에 해당하는 칩에서 index 번째 결함 제거
+        // > remove_defect dieID index
+        // dieID에 해당하는 다이에서 index 번째 결함 제거
         static void RemoveDefect(string[] words)
         {
-            string chipID = words[1];
-            Chip chip = FindChip(chipID);
+            string dieID = words[1];
+            Die die = FindDie(dieID);
 
-            if (chip == null)
+            if (die == null)
             {
-                Console.WriteLine("Error: 삭제 실패. 존재하지 않는 chipID입니다.");
+                Console.WriteLine("Error: 삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
-            chip.RemoveDefect(Convert.ToInt32(words[2])); // index 번째 결함 제거
+            die.RemoveDefect(Convert.ToInt32(words[2])); // index 번째 결함 제거
         }
 
-        // > print chipID
-        // chipID에 해당하는 칩의 정보 출력
+        // > print dieID
+        // dieID에 해당하는 다이의 정보 출력
         static void Print(string[] words)
         {
-            string chipID = words[1];
-            Chip chip = FindChip(chipID);
+            string dieID = words[1];
+            Die die = FindDie(dieID);
 
-            if (chip == null)
+            if (die == null)
             {
-                Console.WriteLine("Error: 조회 실패. 존재하지 않는 chipID입니다.");
+                Console.WriteLine("Error: 조회 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
-            chip.PrintChipInfo(); // 칩 정보 출력
+            die.PrintDieInfo(); // 다이 정보 출력
         }
     }
 }

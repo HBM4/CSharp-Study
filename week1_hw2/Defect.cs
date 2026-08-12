@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace week1_hw2
 {
-    public enum DefectType { Pit, Discolor, Scratch, Void, Crack, Particle, Short } // 결함의 종류
+    public enum DefectType
+    {
+        Bright, // 명불량 (주변보다 밝은 픽셀 - 이물, 반사체 등)
+        Dark, // 암불량 (주변보다 어두운 픽셀 - 이물, Pit 등)
+        Stain, // 넓은 영역의 완만한 명암/색상 편차 (Stain / Discolor)
+        Scratch, // 선형 결함 (Aspect Ratio가 매우 큰 형태)
+        Particle, // 고립된 형태의 구형/Blob 이물질 (Particle)
+        Open, // 회로 패턴 끊어짐
+        Bridge // 회로 패턴 맞붙음
+    } // 결함의 종류
 
     internal class Defect
     {
