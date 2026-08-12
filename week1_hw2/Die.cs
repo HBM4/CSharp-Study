@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,75 +6,75 @@ using System.Threading.Tasks;
 
 namespace week1_hw2
 {
-    internal class Chip
+    internal class Die
     {
-        private string chipID; // 칩의 ID (사용자 마음대로)|
-        private double chipWidth, chipHeight; // 칩 이미지의 가로, 세로 크기
-        private Defect[] defects; // 칩 이미지에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
-        private int defectCount; // 현재 칩 이미지에 존재하는 결함의 수
+        private string dieID; // 다이의 ID (사용자 마음대로)|
+        private double dieWidth, dieHeight; // 다이 이미지의 가로, 세로 크기
+        private Defect[] defects; // 다이 이미지에 존재하는 결함들을 저장하는 배열 (Defect 클래스 인스턴스들)
+        private int defectCount; // 현재 다이 이미지에 존재하는 결함의 수
 
-        // chipID, chipWidth, chipHeight를 전달받아 초기화하는 생성자
-        // 추후 File I/O나 이미지 처리 가능하면 chipWidth, chipHeight 자동 처리로 수정
-        public Chip(string chipID, double width, double height)
+        // dieID, dieWidth, dieHeight를 전달받아 초기화하는 생성자
+        // 추후 File I/O나 이미지 처리 가능하면 dieWidth, dieHeight 자동 처리로 수정
+        public Die(string dieID, double width, double height)
         {
-            this.chipID = chipID;
-            this.chipWidth = width;
-            this.chipHeight = height;
-            defects = new Defect[100]; // 칩 당 최대 100개의 결함 저장 (나중에 무한 확장 가능?)
+            this.dieID = dieID;
+            this.dieWidth = width;
+            this.dieHeight = height;
+            defects = new Defect[100]; // 다이 당 최대 100개의 결함 저장 (나중에 무한 확장 가능?)
             defectCount = 0;
         }
 
-        // chipID Get 메서드
-        public string GetChipID()
+        // dieID Get 메서드
+        public string GetDieID()
         {
-            return chipID;
+            return dieID;
         }
 
-        // chipID Set 메서드
-        public void SetChipID(string chipID)
+        // dieID Set 메서드
+        public void SetDieID(string dieID)
         {
-            this.chipID = chipID;
+            this.dieID = dieID;
         }
 
-        // chipWidth Get 메서드
+        // dieWidth Get 메서드
         public double GetWidth()
         {
-            return chipWidth;
+            return dieWidth;
         }
 
-        // chipHeight Get 메서드
+        // dieHeight Get 메서드
         public double GetHeight()
         {
-            return chipHeight;
+            return dieHeight;
         }
 
-        // chipWidth, chipHeight Set 메서드
+        // dieWidth, dieHeight Set 메서드
         public void SetSize(double width, double height)
         {
-            this.chipWidth = width;
-            this.chipHeight = height;
+            this.dieWidth = width;
+            this.dieHeight = height;
         }
 
-        // Chip에 Defect 추가하는 메서드
+        // Die에 Defect 추가하는 메서드
         public void AddDefect(Defect defect)
         {
-            // 결함 중심점 좌표가 칩 경계를 벗어나는지 확인
+            // 결함 중심점 좌표가 다이 경계를 벗어나는지 확인
             double x = defect.GetX();
             double y = defect.GetY();
 
-            if (x < 0 || x > chipWidth || y < 0 || y > chipHeight)
+            if (x < 0 || x > dieWidth || y < 0 || y > dieHeight)
             {
-                Console.WriteLine("Error: 추가 실패. 결함 좌표가 칩 경계를 벗어남.");
+                Console.WriteLine("Error: 추가 실패. 결함 좌표가 다이 경계를 벗어남.");
                 return;
             }
 
-            // 차지하는 결함 박스가 칩 경계를 벗어나는지 확인
+            // 차지하는 결함 박스가 다이 경계를 벗어나는지 확인
             double w = defect.GetWidth();
             double h = defect.GetHeight();
 
-            if (x - w / 2 < 0 || x + w / 2 > chipWidth || y - h / 2 < 0 || y + h / 2 > chipHeight)
+            if (x - w / 2 < 0 || x + w / 2 > dieWidth || y - h / 2 < 0 || y + h / 2 > dieHeight)
             {
-                Console.WriteLine("Error: 추가 실패. 결함 박스가 칩 경계를 벗어남.");
+                Console.WriteLine("Error: 추가 실패. 결함 박스가 다이 경계를 벗어남.");
                 return;
             }
 
@@ -89,10 +89,10 @@ namespace week1_hw2
             defects[defectCount] = defect;
             defectCount++;
 
-            Console.WriteLine($"Log: {chipID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");
+            Console.WriteLine($"Log: {dieID}에 {defectCount}번째 결함을 추가함. (Type={defect.GetDefectType()}, Coordinates=({x}, {y}), Size=({w}, {h}))");
         }
 
-        // Chip에 Defect 조회하는 메서드
+        // Die에 Defect 조회하는 메서드
         public Defect GetDefect(int index)
         {
             if (index < 0 || index >= defectCount)
@@ -104,7 +104,7 @@ namespace week1_hw2
             return defects[index];
         }
 
-        // Chip에 Defect 제거하는 메서드
+        // Die에 Defect 제거하는 메서드
         public void RemoveDefect(int index)
         {
             if (index < 0 || index >= defectCount)
@@ -125,18 +125,18 @@ namespace week1_hw2
             Console.WriteLine($"Log: {index + 1}번째 결함을 제거함.");
         }
 
-        // 칩에 존재하는 결함의 수를 반환하는 메서드
+        // 다이에 존재하는 결함의 수를 반환하는 메서드
         public int GetDefectCount()
         {
             return defectCount;
         }
 
-        // Chip 정보 출력하는 메서드
-        public void PrintChipInfo()
+        // Die 정보 출력하는 메서드
+        public void PrintDieInfo()
         {
             Console.WriteLine("========================");
-            Console.WriteLine($"Chip ID: {chipID}");
-            Console.WriteLine($"Chip Size: {chipWidth} x {chipHeight}");
+            Console.WriteLine($"Die ID: {dieID}");
+            Console.WriteLine($"Die Size: {dieWidth} x {dieHeight}");
             Console.WriteLine($"총 결함 수: {defectCount}");
 
             for (int i = 0; i < defectCount; i++)
