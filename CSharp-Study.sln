@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch34_P222", "Ch34_P222\Ch34
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch37_FindEvenNumbers", "Ch37_FindEvenNumbers\Ch37_FindEvenNumbers.csproj", "{65DB149C-75BB-482D-A1F1-76C528E7C60E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch39_Threads", "Ch39_Threads\Ch39_Threads.csproj", "{114E2D49-782C-41D3-A773-7AD6A15A56C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +257,10 @@ Global
 		{65DB149C-75BB-482D-A1F1-76C528E7C60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65DB149C-75BB-482D-A1F1-76C528E7C60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65DB149C-75BB-482D-A1F1-76C528E7C60E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{114E2D49-782C-41D3-A773-7AD6A15A56C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{114E2D49-782C-41D3-A773-7AD6A15A56C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{114E2D49-782C-41D3-A773-7AD6A15A56C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{114E2D49-782C-41D3-A773-7AD6A15A56C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
