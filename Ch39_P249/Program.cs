@@ -2,6 +2,8 @@
 {
     internal class Program
     {
+        private static readonly object consoleLock = new object(); // 콘솔 출력용 잠금 객체
+
         static void Main(string[] args)
         {
             Thread thread1 = new Thread(FrogRace);
@@ -23,11 +25,18 @@
 
             for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine($"Frog #{frogNumber} jumped");
+                lock (consoleLock) // 임계 구역: 한 번에 하나의 스레드만 콘솔에 출력하도록 보장
+                {
+                    Console.WriteLine($"Frog #{frogNumber} jumped");
+                }
+
                 Thread.Sleep(Random.Shared.Next(0, 1001)); // Shared 의미: Random 객체를 여러 스레드에서 안전하게 공유할 수 있도록 제공하는 정적 속성
             }
 
-            Console.WriteLine($"Frog #{frogNumber} finished");
+            lock (consoleLock)
+            {
+                Console.WriteLine($"Frog #{frogNumber} finished");
+            }
         }
     }
 }
