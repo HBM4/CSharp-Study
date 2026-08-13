@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace week2_hw2
 {
-    public delegate void LogHandler(string message); // 로그 메시지 하나를 받아 처리하는 대리자
+    public delegate void LogHandler(string type, string message); // 로그 종류와 메시지를 받아 처리하는 대리자
 
     internal static class Logger
     {
@@ -21,30 +21,21 @@ namespace week2_hw2
         }
 
         // 등록된 모든 핸들러(콘솔, 파일)를 순서대로 호출함.
-        // 일반 로그와 에러 메시지 모두 여기로 들어옴
-        public static void Log(string message)
+        // type에는 "Log" 또는 "Error"처럼 호출하는 쪽에서 종류를 직접 넣어줌
+        public static void Log(string type, string message)
         {
-            handlers(message);
+            handlers(type, message);
         }
 
-        private static void LogToConsole(string message)
+        private static void LogToConsole(string type, string message)
         {
-            Console.WriteLine(message);
+            Console.WriteLine($"{type}: {message}");
         }
 
-        // Log와 Error 메시지를 구분 없이 log.csv 한 파일에 모두 기록함 (열: 시각, 메시지)
-        private static void LogToFile(string message)
+        // Log와 Error를 구분 없이 log.csv 한 파일에 모두 기록함 (열: 종류, 내용)
+        private static void LogToFile(string type, string message)
         {
-            try
-            {
-                File.AppendAllText("log.csv", message + "\n"); // 로그 메시지를 CSV 형식으로 기록
-            }
-            catch (IOException)
-            {
-                // 콘솔 핸들러는 이미 실행된 뒤이므로, 파일 기록만 실패했다고 알려주고 계속 진행함
-                // (Logger.Log를 다시 부르면 무한 재귀가 되므로 여기서는 Console 출력만)
-                Console.WriteLine("Error: 로그 파일 기록 실패.");
-            }
+            File.AppendAllText("log.csv", $"{type},{message}\n");
         }
     }
 }
