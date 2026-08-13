@@ -41,6 +41,8 @@ namespace week2_hw2
                         ExportMask(words);
                     else if (words[0] == "exit")
                         break;
+                    else
+                        Logger.Log("Error", words[0], "존재하지 않는 명령어입니다.");
                 }
                 catch (FormatException)
                 {
