@@ -97,7 +97,7 @@ namespace week2_hw2
         // 결함 박스가 차지하는 픽셀을 1로, 나머지를 0으로 표시한 격자를 파일로 저장하는 메서드
         public void ExportDefectMask(string filePath, string command)
         {
-            int[,] mask = new int[Height, Width]; // 모든 칸이 기본값 0으로 시작함
+            byte[,] mask = new byte[Height, Width]; // 값이 0/1뿐이므로 int 대신 byte 사용 (칸당 1바이트로 메모리 절약)
 
             foreach (Defect defect in defects)
             {
