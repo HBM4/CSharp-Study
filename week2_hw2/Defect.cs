@@ -12,9 +12,9 @@ namespace week2_hw2
         Dark, // 암불량 (주변보다 어두운 픽셀 - 이물, Pit 등)
         Stain, // 넓은 영역의 완만한 명암/색상 편차 (Stain / Discolor)
         Scratch, // 선형 결함 (Aspect Ratio가 매우 큰 형태)
-        Particle, // 고립된 형태의 구형/Blob 이물질 (Particle)
+        Particle, // 고립된 형태의 구형 이물질 (Particle)
         Open, // 회로 패턴 끊어짐
-        Bridge // 회로 패턴 맞붙음
+        Bridge // 회로 패턴 붙음
     }
 
     internal class Defect

@@ -20,7 +20,8 @@ namespace week2_hw2
             handlers += LogToFile;
         }
 
-        // 등록된 모든 핸들러(콘솔, 파일)를 순서대로 호출함. 일반 로그와 에러 메시지 모두 여기로 들어옴
+        // 등록된 모든 핸들러(콘솔, 파일)를 순서대로 호출함.
+        // 일반 로그와 에러 메시지 모두 여기로 들어옴
         public static void Log(string message)
         {
             handlers(message);
