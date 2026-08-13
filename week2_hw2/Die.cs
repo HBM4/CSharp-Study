@@ -40,13 +40,13 @@ namespace week2_hw2
 
             if (x1 < 0 || x2 > Width || y1 < 0 || y2 > Height)
             {
-                Console.WriteLine("Error: 추가 실패. 결함 박스가 다이 경계를 벗어남.");
+                Logger.Log("Error: 추가 실패. 결함 박스가 다이 경계를 벗어남.");
                 return;
             }
 
             defects.Add(defect); // Add: 리스트에 결함 추가
 
-            Console.WriteLine($"Log: {DieID}에 {DefectCount}번째 결함을 추가함. (Type={defect.Type}, X1={x1}, Y1={y1}, X2={x2}, Y2={y2})");
+            Logger.Log($"Log: {DieID}에 {DefectCount}번째 결함을 추가함. (Type={defect.Type}, X1={x1}, Y1={y1}, X2={x2}, Y2={y2})");
         }
 
         // Die에 Defect 조회하는 메서드
@@ -54,7 +54,7 @@ namespace week2_hw2
         {
             if (index < 0 || index >= DefectCount)
             {
-                Console.WriteLine("Error: 조회 실패. 유효하지 않은 결함 인덱스를 입력함.");
+                Logger.Log("Error: 조회 실패. 유효하지 않은 결함 인덱스를 입력함.");
                 return null;
             }
 
@@ -66,13 +66,13 @@ namespace week2_hw2
         {
             if (index < 0 || index >= DefectCount)
             {
-                Console.WriteLine("Error: 삭제 실패. 유효하지 않은 결함 인덱스를 입력함.");
+                Logger.Log("Error: 삭제 실패. 유효하지 않은 결함 인덱스를 입력함.");
                 return;
             }
 
             defects.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
-            Console.WriteLine($"Log: {index + 1}번째 결함을 제거함.");
+            Logger.Log($"Log: {index + 1}번째 결함을 제거함.");
         }
 
         // 결함 박스가 차지하는 픽셀을 1로, 나머지를 0으로 표시한 격자를 파일로 저장하는 메서드
@@ -116,7 +116,7 @@ namespace week2_hw2
 
             File.WriteAllLines(filePath, lines);
 
-            Console.WriteLine($"Log: {DieID}의 결함 박스 마스크를 {filePath}에 저장함.");
+            Logger.Log($"Log: {DieID}의 결함 박스 마스크를 {filePath}에 저장함.");
         }
 
         // Die 정보 출력하는 메서드
