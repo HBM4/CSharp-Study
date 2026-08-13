@@ -90,6 +90,18 @@ namespace week2_hw2
             int dieWidth = Convert.ToInt32(words[2]); // 생성할 다이의 너비 (dieWidth)
             int dieHeight = Convert.ToInt32(words[3]); // 생성할 다이의 높이 (dieHeight)
 
+            if (FindDie(dieID) != null)
+            {
+                Logger.Log("Error", words[0], "생성 실패. 이미 존재하는 dieID입니다.");
+                return;
+            }
+
+            if (dieWidth <= 0 || dieHeight <= 0)
+            {
+                Logger.Log("Error", words[0], "생성 실패. 다이 크기는 1 이상이어야 합니다.");
+                return;
+            }
+
             Die die = new Die(dieID, dieWidth, dieHeight); // Die 객체 생성
             die.Notify += (sender, e) => Logger.Log(e.Type, e.Command, e.Message); // Die의 알림을 람다로 구독해서 로깅함
 

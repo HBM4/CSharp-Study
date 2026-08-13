@@ -63,7 +63,13 @@ namespace week2_hw2
             int x2 = defect.X2;
             int y2 = defect.Y2;
 
-            if (x1 < 0 || x2 > Width || y1 < 0 || y2 > Height)
+            if (x1 > x2 || y1 > y2)
+            {
+                OnNotify("Error", command, "추가 실패. 결함 좌표 순서가 올바르지 않음.");
+                return;
+            }
+
+            if (x1 < 0 || x2 >= Width || y1 < 0 || y2 >= Height)
             {
                 OnNotify("Error", command, "추가 실패. 결함 박스가 다이 경계를 벗어남.");
                 return;
