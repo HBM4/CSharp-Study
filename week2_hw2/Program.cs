@@ -11,7 +11,7 @@ namespace week2_hw2
     remove_die dieID
     add_defect dieID x1 y1 x2 y2 defectType
     remove_defect dieID index
-    export_mask dieID filePath
+    export dieID filePath
     exit
     */
 
@@ -37,7 +37,7 @@ namespace week2_hw2
                         AddDefect(words);
                     else if (words[0] == "remove_defect")
                         RemoveDefect(words);
-                    else if (words[0] == "export_mask")
+                    else if (words[0] == "export")
                         ExportMask(words);
                     else if (words[0] == "exit")
                         break;
@@ -180,7 +180,7 @@ namespace week2_hw2
             die.RemoveDefect(Convert.ToInt32(words[2]), words[0]); // index 번째 결함 제거
         }
 
-        // > export_mask dieID filePath
+        // > export dieID filePath
         // dieID에 해당하는 다이의 결함 박스 마스크를 filePath 파일로 저장
         static void ExportMask(string[] words)
         {
