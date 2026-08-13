@@ -99,15 +99,23 @@ namespace week2_hw2
         {
             byte[,] mask = new byte[Height, Width]; // 값이 0/1뿐이므로 int 대신 byte 사용 (칸당 1바이트로 메모리 절약)
 
-            foreach (Defect defect in defects) // 결함 박스마다 반복
+            unsafe
             {
-                for (int row = defect.Y1; row <= defect.Y2; row++) // 결함 박스의 y 좌표 범위만큼 반복
+                // mask를 GC가 옮기지 못하도록 고정
+                // 2차원 배열은 row-major로 저장되므로 basePtr + row * Width + col이 mask[row, col]과 같은 칸을 가리킴
+                fixed (byte* pointerToMask = mask)
                 {
-                    for (int col = defect.X1; col <= defect.X2; col++) // 결함 박스의 x 좌표 범위만큼 반복
+                    foreach (Defect defect in defects) // 결함 박스마다 반복
                     {
-                        // 박스의 맨 윗줄/맨 아랫줄/왼쪽 끝/오른쪽 끝(테두리)에 해당하는 픽셀만 1 표시
-                        if (row == defect.Y1 || row == defect.Y2 || col == defect.X1 || col == defect.X2)
-                            mask[row, col] = 1;
+                        for (int row = defect.Y1; row <= defect.Y2; row++) // 결함 박스의 y 좌표 범위만큼 반복
+                        {
+                            for (int col = defect.X1; col <= defect.X2; col++) // 결함 박스의 x 좌표 범위만큼 반복
+                            {
+                                // 박스의 맨 윗줄/맨 아랫줄/왼쪽 끝/오른쪽 끝(테두리)에 해당하는 픽셀만 1 표시
+                                if (row == defect.Y1 || row == defect.Y2 || col == defect.X1 || col == defect.X2)
+                                    pointerToMask[row * Width + col] = 1;
+                            }
+                        }
                     }
                 }
             }
