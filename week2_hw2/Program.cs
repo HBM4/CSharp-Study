@@ -80,10 +80,13 @@ namespace week2_hw2
         static void CreateDie(string[] words)
         {
             string dieID = words[1]; // 생성할 다이의 ID (dieID)
-            int dieWidth = Convert.ToInt32(words[2]);
-            int dieHeight = Convert.ToInt32(words[3]);
+            int dieWidth = Convert.ToInt32(words[2]); // 생성할 다이의 너비 (dieWidth)
+            int dieHeight = Convert.ToInt32(words[3]); // 생성할 다이의 높이 (dieHeight)
 
-            dies.Add(new Die(dieID, dieWidth, dieHeight)); // Add: 리스트에 다이 추가
+            Die die = new Die(dieID, dieWidth, dieHeight); // Die 객체 생성
+            die.Notify += (sender, e) => Logger.Log(e.Type, e.Command, e.Message); // Die의 알림을 람다로 구독해서 로깅함
+
+            dies.Add(die); // Add: 리스트에 다이 추가
 
             Logger.Log("Log", words[0], $"{dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
         }
