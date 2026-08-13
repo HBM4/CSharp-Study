@@ -21,45 +21,51 @@ namespace week2_hw2
 
         static void Main(string[] args)
         {
-            while (true)
+            try
             {
-                Console.Write("\n> ");
-                string text = Console.ReadLine();
-                string[] words = text.Split(' ');
+                while (true)
+                {
+                    Console.Write("\n> ");
+                    string text = Console.ReadLine();
+                    string[] words = text.Split(' ');
 
-                try
-                {
-                    if (words[0] == "create_die")
-                        CreateDie(words);
-                    else if (words[0] == "remove_die")
-                        RemoveDie(words);
-                    else if (words[0] == "add_defect")
-                        AddDefect(words);
-                    else if (words[0] == "remove_defect")
-                        RemoveDefect(words);
-                    else if (words[0] == "export")
-                        ExportMask(words);
-                    else if (words[0] == "exit")
-                        break;
-                    else
-                        Logger.Log("Error", words[0], "존재하지 않는 명령어입니다.");
+                    try
+                    {
+                        if (words[0] == "create_die")
+                            CreateDie(words);
+                        else if (words[0] == "remove_die")
+                            RemoveDie(words);
+                        else if (words[0] == "add_defect")
+                            AddDefect(words);
+                        else if (words[0] == "remove_defect")
+                            RemoveDefect(words);
+                        else if (words[0] == "export")
+                            ExportMask(words);
+                        else if (words[0] == "exit")
+                            break;
+                        else
+                            Logger.Log("Error", words[0], "존재하지 않는 명령어입니다.");
+                    }
+                    catch (FormatException)
+                    {
+                        Logger.Log("Error", words[0], "숫자를 입력해야 하는 자리에 숫자가 아닌 값이 입력됨.");
+                    }
+                    catch (OverflowException)
+                    {
+                        Logger.Log("Error", words[0], "입력한 숫자가 너무 크거나 작습니다.");
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        Logger.Log("Error", words[0], "명령어의 인자 개수가 부족함.");
+                    }
                 }
-                catch (FormatException)
-                {
-                    Logger.Log("Error", words[0], "숫자를 입력해야 하는 자리에 숫자가 아닌 값이 입력됨.");
-                }
-                catch (OverflowException)
-                {
-                    Logger.Log("Error", words[0], "입력한 숫자가 너무 크거나 작습니다.");
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    Logger.Log("Error", words[0], "명령어의 인자 개수가 부족함.");
-                }
+
+                Logger.Log("Log", "exit", "프로그램 종료.");
             }
-
-            Logger.Log("Log", "exit", "프로그램 종료.");
-            Logger.Wait(); // 백그라운드로 진행 중이던 파일 쓰기가 모두 끝날 때까지 기다림
+            finally
+            {
+                Logger.Wait(); // 정상 종료든, 처리하지 못한 예외로 죽든 항상 실행되어 파일 쓰기를 마무리함
+            }
         }
 
         // dieID로 다이를 찾는 메서드 (없으면 null 반환)
