@@ -11,8 +11,7 @@ namespace week2_hw2
     remove_die dieID
     add_defect dieID x1 y1 x2 y2 defectType
     remove_defect dieID index
-    print dieID
-    export_mask dieID filePath
+    export dieID filePath
     exit
     */
 
@@ -22,29 +21,51 @@ namespace week2_hw2
 
         static void Main(string[] args)
         {
-            while (true)
+            try
             {
-                Console.Write("\n> ");
-                string text = Console.ReadLine();
-                string[] words = text.Split(' ');
+                while (true)
+                {
+                    Console.Write("\n> ");
+                    string text = Console.ReadLine();
+                    string[] words = text.Split(' ');
 
-                if (words[0] == "create_die")
-                    CreateDie(words);
-                else if (words[0] == "remove_die")
-                    RemoveDie(words);
-                else if (words[0] == "add_defect")
-                    AddDefect(words);
-                else if (words[0] == "remove_defect")
-                    RemoveDefect(words);
-                else if (words[0] == "print")
-                    Print(words);
-                else if (words[0] == "export_mask")
-                    ExportMask(words);
-                else if (words[0] == "exit")
-                    break;
+                    try
+                    {
+                        if (words[0] == "create_die")
+                            CreateDie(words);
+                        else if (words[0] == "remove_die")
+                            RemoveDie(words);
+                        else if (words[0] == "add_defect")
+                            AddDefect(words);
+                        else if (words[0] == "remove_defect")
+                            RemoveDefect(words);
+                        else if (words[0] == "export")
+                            ExportMask(words);
+                        else if (words[0] == "exit")
+                            break;
+                        else
+                            Logger.Log("Error", words[0], "존재하지 않는 명령어입니다.");
+                    }
+                    catch (FormatException)
+                    {
+                        Logger.Log("Error", words[0], "숫자를 입력해야 하는 자리에 숫자가 아닌 값이 입력됨.");
+                    }
+                    catch (OverflowException)
+                    {
+                        Logger.Log("Error", words[0], "입력한 숫자가 너무 크거나 작습니다.");
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        Logger.Log("Error", words[0], "명령어의 인자 개수가 부족함.");
+                    }
+                }
+
+                Logger.Log("Log", "exit", "프로그램 종료.");
             }
-
-            Console.WriteLine("Log: 프로그램 종료.");
+            finally
+            {
+                Logger.Wait(); // 정상 종료든, 처리하지 못한 예외로 죽든 항상 실행되어 파일 쓰기를 마무리함
+            }
         }
 
         // dieID로 다이를 찾는 메서드 (없으면 null 반환)
@@ -66,12 +87,27 @@ namespace week2_hw2
         static void CreateDie(string[] words)
         {
             string dieID = words[1]; // 생성할 다이의 ID (dieID)
-            int dieWidth = Convert.ToInt32(words[2]);
-            int dieHeight = Convert.ToInt32(words[3]);
+            int dieWidth = Convert.ToInt32(words[2]); // 생성할 다이의 너비 (dieWidth)
+            int dieHeight = Convert.ToInt32(words[3]); // 생성할 다이의 높이 (dieHeight)
 
-            dies.Add(new Die(dieID, dieWidth, dieHeight)); // Add: 리스트에 다이 추가
+            if (FindDie(dieID) != null)
+            {
+                Logger.Log("Error", words[0], "생성 실패. 이미 존재하는 dieID입니다.");
+                return;
+            }
 
-            Console.WriteLine($"Log: {dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
+            if (dieWidth <= 0 || dieHeight <= 0)
+            {
+                Logger.Log("Error", words[0], "생성 실패. 다이 크기는 1 이상이어야 합니다.");
+                return;
+            }
+
+            Die die = new Die(dieID, dieWidth, dieHeight); // Die 객체 생성
+            die.Notify += (sender, e) => Logger.Log(e.Type, e.Command, e.Message); // Die의 알림을 람다로 구독해서 로깅함
+
+            dies.Add(die); // Add: 리스트에 다이 추가
+
+            Logger.Log("Log", words[0], $"{dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
         }
 
         // > remove_die dieID
@@ -92,13 +128,13 @@ namespace week2_hw2
 
             if (index == -1)
             {
-                Console.WriteLine("Error: 삭제 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
             dies.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
-            Console.WriteLine($"Log: {dieID} 다이를 제거함.");
+            Logger.Log("Log", words[0], $"{dieID} 다이를 제거함.");
         }
 
         // > add_defect dieID x1 y1 x2 y2 defectType
@@ -110,7 +146,7 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Console.WriteLine("Error: 추가 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "추가 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
@@ -144,12 +180,12 @@ namespace week2_hw2
                     type = DefectType.Bridge;
                     break;
                 default:
-                    Console.WriteLine("Error: 추가 실패. 유효하지 않은 DefectType입니다.");
+                    Logger.Log("Error", words[0], "추가 실패. 유효하지 않은 DefectType입니다.");
                     return;
             }
 
             Defect defect = new Defect(x1, y1, x2, y2, type);
-            die.AddDefect(defect); // 다이에 결함 추가
+            die.AddDefect(defect, words[0]); // 다이에 결함 추가
         }
 
         // > remove_defect dieID index
@@ -161,30 +197,14 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Console.WriteLine("Error: 삭제 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
-            die.RemoveDefect(Convert.ToInt32(words[2])); // index 번째 결함 제거
+            die.RemoveDefect(Convert.ToInt32(words[2]), words[0]); // index 번째 결함 제거
         }
 
-        // > print dieID
-        // dieID에 해당하는 다이의 정보 출력
-        static void Print(string[] words)
-        {
-            string dieID = words[1]; // 출력할 다이의 ID (dieID)
-            Die die = FindDie(dieID);
-
-            if (die == null)
-            {
-                Console.WriteLine("Error: 조회 실패. 존재하지 않는 dieID입니다.");
-                return;
-            }
-
-            die.PrintDieInfo(); // 다이 정보 출력
-        }
-
-        // > export_mask dieID filePath
+        // > export dieID filePath
         // dieID에 해당하는 다이의 결함 박스 마스크를 filePath 파일로 저장
         static void ExportMask(string[] words)
         {
@@ -193,12 +213,12 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Console.WriteLine("Error: 저장 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "저장 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
             string filePath = words[2]; // 저장할 파일 경로 (filePath)
-            die.ExportDefectMask(filePath); // 결함 박스 마스크 파일로 저장
+            die.ExportDefectMask(filePath, words[0]); // 결함 박스 마스크 파일로 저장
         }
     }
 }
