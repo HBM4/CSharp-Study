@@ -59,6 +59,7 @@ namespace week2_hw2
             }
 
             Logger.Log("Log", "exit", "프로그램 종료.");
+            Logger.Wait(); // 백그라운드로 진행 중이던 파일 쓰기가 모두 끝날 때까지 기다림
         }
 
         // dieID로 다이를 찾는 메서드 (없으면 null 반환)
