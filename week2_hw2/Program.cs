@@ -28,20 +28,35 @@ namespace week2_hw2
                 string text = Console.ReadLine();
                 string[] words = text.Split(' ');
 
-                if (words[0] == "create_die")
-                    CreateDie(words);
-                else if (words[0] == "remove_die")
-                    RemoveDie(words);
-                else if (words[0] == "add_defect")
-                    AddDefect(words);
-                else if (words[0] == "remove_defect")
-                    RemoveDefect(words);
-                else if (words[0] == "print")
-                    Print(words);
-                else if (words[0] == "export_mask")
-                    ExportMask(words);
-                else if (words[0] == "exit")
-                    break;
+                try
+                {
+                    if (words[0] == "create_die")
+                        CreateDie(words);
+                    else if (words[0] == "remove_die")
+                        RemoveDie(words);
+                    else if (words[0] == "add_defect")
+                        AddDefect(words);
+                    else if (words[0] == "remove_defect")
+                        RemoveDefect(words);
+                    else if (words[0] == "print")
+                        Print(words);
+                    else if (words[0] == "export_mask")
+                        ExportMask(words);
+                    else if (words[0] == "exit")
+                        break;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Error: 숫자를 입력해야 하는 자리에 숫자가 아닌 값이 입력됨.");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Error: 입력한 숫자가 너무 크거나 작습니다.");
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine("Error: 명령어의 인자 개수가 부족함.");
+                }
             }
 
             Console.WriteLine("Log: 프로그램 종료.");
