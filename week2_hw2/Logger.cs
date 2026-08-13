@@ -34,7 +34,8 @@ namespace week2_hw2
 
         private static void LogToFile(string type, string command, string message)
         {
-            File.AppendAllText("log.csv", $"{type},{command},{message}\n");
+            File.AppendAllText("log.csv", $"{type},{command},\"{message}\"\n", new UTF8Encoding(true));
+            // UTF8Encoding(true): BOM(Byte Order Mark) 포함 UTF-8 인코딩으로 파일에 기록
         }
     }
 }
