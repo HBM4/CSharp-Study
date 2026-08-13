@@ -11,7 +11,6 @@ namespace week2_hw2
     remove_die dieID
     add_defect dieID x1 y1 x2 y2 defectType
     remove_defect dieID index
-    print dieID
     export_mask dieID filePath
     exit
     */
@@ -38,8 +37,6 @@ namespace week2_hw2
                         AddDefect(words);
                     else if (words[0] == "remove_defect")
                         RemoveDefect(words);
-                    else if (words[0] == "print")
-                        Print(words);
                     else if (words[0] == "export_mask")
                         ExportMask(words);
                     else if (words[0] == "exit")
@@ -181,22 +178,6 @@ namespace week2_hw2
             }
 
             die.RemoveDefect(Convert.ToInt32(words[2]), words[0]); // index 번째 결함 제거
-        }
-
-        // > print dieID
-        // dieID에 해당하는 다이의 정보 출력
-        static void Print(string[] words)
-        {
-            string dieID = words[1]; // 출력할 다이의 ID (dieID)
-            Die die = FindDie(dieID);
-
-            if (die == null)
-            {
-                Logger.Log("Error", words[0], "조회 실패. 존재하지 않는 dieID입니다.");
-                return;
-            }
-
-            die.PrintDieInfo(); // 다이 정보 출력
         }
 
         // > export_mask dieID filePath
