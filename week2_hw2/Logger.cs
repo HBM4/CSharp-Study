@@ -11,22 +11,22 @@ namespace week2_hw2
 
     internal static class Logger
     {
-        private static LogHandler handlers; // LogHandler 타입의 델리게이트를 선언하고, LogToConsole과 LogToFile 메서드를 등록함
+        private static LogHandler logHandlers; // LogHandler 타입의 델리게이트를 선언하고, LogToConsole과 LogToFile 메서드를 등록함
 
         private static object fileLock = new object(); // log.csv에 동시에 쓰지 못하도록 막는 잠금
         private static Task lastWrite; // 가장 최근에 시작한 파일 쓰기 작업
 
         static Logger() // Logger 클래스가 처음 사용될 때 한 번만 실행됨
         {
-            handlers += LogToConsole;
-            handlers += LogToFile;
+            logHandlers += LogToConsole;
+            logHandlers += LogToFile;
         }
 
         // 위에서 등록된 모든 핸들러(콘솔, 파일)를 순서대로 호출함.
         // type에는 "Log" 또는 "Error", command에는 words[0]를 호출하는 쪽에서 직접 넣어줌
         public static void Log(string type, string command, string message)
         {
-            handlers(type, command, message);
+            logHandlers(type, command, message);
         }
 
         // 프로그램이 끝나기 전에, 아직 끝나지 않은 마지막 파일 쓰기 작업이 끝날 때까지 기다림

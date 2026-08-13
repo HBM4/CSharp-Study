@@ -101,7 +101,7 @@ namespace week2_hw2
 
             unsafe
             {
-                // mask를 GC가 옮기지 못하도록 고정
+                // mask를 가비지 컬렉터가 옮기지 못하도록 고정
                 // 2차원 배열은 row-major로 저장되므로 basePtr + row * Width + col이 mask[row, col]과 같은 칸을 가리킴
                 fixed (byte* pointerToMask = mask)
                 {
