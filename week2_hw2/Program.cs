@@ -47,19 +47,19 @@ namespace week2_hw2
                 }
                 catch (FormatException)
                 {
-                    Logger.Log("Error", "숫자를 입력해야 하는 자리에 숫자가 아닌 값이 입력됨.");
+                    Logger.Log("Error", words[0], "숫자를 입력해야 하는 자리에 숫자가 아닌 값이 입력됨.");
                 }
                 catch (OverflowException)
                 {
-                    Logger.Log("Error", "입력한 숫자가 너무 크거나 작습니다.");
+                    Logger.Log("Error", words[0], "입력한 숫자가 너무 크거나 작습니다.");
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    Logger.Log("Error", "명령어의 인자 개수가 부족함.");
+                    Logger.Log("Error", words[0], "명령어의 인자 개수가 부족함.");
                 }
             }
 
-            Logger.Log("Log", "프로그램 종료.");
+            Logger.Log("Log", "exit", "프로그램 종료.");
         }
 
         // dieID로 다이를 찾는 메서드 (없으면 null 반환)
@@ -86,7 +86,7 @@ namespace week2_hw2
 
             dies.Add(new Die(dieID, dieWidth, dieHeight)); // Add: 리스트에 다이 추가
 
-            Logger.Log("Log", $"{dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
+            Logger.Log("Log", words[0], $"{dieID} 다이를 생성함. (Width={dieWidth}, Height={dieHeight})");
         }
 
         // > remove_die dieID
@@ -107,13 +107,13 @@ namespace week2_hw2
 
             if (index == -1)
             {
-                Logger.Log("Error", "삭제 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
             dies.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
 
-            Logger.Log("Log", $"{dieID} 다이를 제거함.");
+            Logger.Log("Log", words[0], $"{dieID} 다이를 제거함.");
         }
 
         // > add_defect dieID x1 y1 x2 y2 defectType
@@ -125,7 +125,7 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Logger.Log("Error", "추가 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "추가 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
@@ -159,12 +159,12 @@ namespace week2_hw2
                     type = DefectType.Bridge;
                     break;
                 default:
-                    Logger.Log("Error", "추가 실패. 유효하지 않은 DefectType입니다.");
+                    Logger.Log("Error", words[0], "추가 실패. 유효하지 않은 DefectType입니다.");
                     return;
             }
 
             Defect defect = new Defect(x1, y1, x2, y2, type);
-            die.AddDefect(defect); // 다이에 결함 추가
+            die.AddDefect(defect, words[0]); // 다이에 결함 추가
         }
 
         // > remove_defect dieID index
@@ -176,11 +176,11 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Logger.Log("Error", "삭제 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
-            die.RemoveDefect(Convert.ToInt32(words[2])); // index 번째 결함 제거
+            die.RemoveDefect(Convert.ToInt32(words[2]), words[0]); // index 번째 결함 제거
         }
 
         // > print dieID
@@ -192,7 +192,7 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Logger.Log("Error", "조회 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "조회 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
@@ -208,12 +208,12 @@ namespace week2_hw2
 
             if (die == null)
             {
-                Logger.Log("Error", "저장 실패. 존재하지 않는 dieID입니다.");
+                Logger.Log("Error", words[0], "저장 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
             string filePath = words[2]; // 저장할 파일 경로 (filePath)
-            die.ExportDefectMask(filePath); // 결함 박스 마스크 파일로 저장
+            die.ExportDefectMask(filePath, words[0]); // 결함 박스 마스크 파일로 저장
         }
     }
 }
