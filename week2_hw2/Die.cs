@@ -99,18 +99,12 @@ namespace week2_hw2
         {
             byte[,] mask = new byte[Height, Width]; // 값이 0/1뿐이므로 int 대신 byte 사용 (칸당 1바이트로 메모리 절약)
 
-            foreach (Defect defect in defects)
+            foreach (Defect defect in defects) // 결함 박스마다 반복
             {
-                for (int row = defect.Y1; row <= defect.Y2; row++)
+                for (int row = defect.Y1; row <= defect.Y2; row++) // 결함 박스의 y 좌표 범위만큼 반복
                 {
-                    if (row < 0 || row >= Height) // 다이 경계를 벗어난 결함 박스는 무시
-                        continue;
-
-                    for (int col = defect.X1; col <= defect.X2; col++)
+                    for (int col = defect.X1; col <= defect.X2; col++) // 결함 박스의 x 좌표 범위만큼 반복
                     {
-                        if (col < 0 || col >= Width)
-                            continue;
-
                         // 박스의 맨 윗줄/맨 아랫줄/왼쪽 끝/오른쪽 끝(테두리)에 해당하는 픽셀만 1 표시
                         if (row == defect.Y1 || row == defect.Y2 || col == defect.X1 || col == defect.X2)
                             mask[row, col] = 1;
