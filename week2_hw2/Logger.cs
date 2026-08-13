@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace week2_hw2
 {
-    public delegate void LogHandler(string type, string command, string message); // 로그 종류, 명령어, 메시지를 받아 처리하는 대리자
+    internal delegate void LogHandler(string type, string command, string message); // 로그 종류, 명령어, 메시지를 받아 처리하는 대리자
 
     internal static class Logger
     {

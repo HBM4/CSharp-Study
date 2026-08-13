@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace week2_hw2
 {
     // Die가 이벤트로 알림을 보낼 때 함께 전달하는 정보 (Logger.LogHandler와 같은 모양)
-    public class DieEventArgs : EventArgs
+    internal class DieEventArgs : EventArgs
     {
         public string Type { get; } // "Log" 또는 "Error"
         public string Command { get; } // 이 알림을 발생시킨 명령어 (add_defect 등)

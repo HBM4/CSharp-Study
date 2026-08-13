@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace week2_hw2
 {
-    public enum DefectType
+    internal enum DefectType
     {
         Bright, // 명불량 (주변보다 밝은 픽셀 - 이물, 반사체 등)
         Dark, // 암불량 (주변보다 어두운 픽셀 - 이물, Pit 등)
