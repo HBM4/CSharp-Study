@@ -37,13 +37,6 @@ namespace week2_hw2
         // Die 내부에서 결함 추가/제거, 마스크 Export 등의 작업이 일어날 때, 외부에서 이를 알 수 있도록 이벤트를 발생시킴.
         public event EventHandler<DieEventArgs> Notify;
 
-        // Die 내부에서 Notify 이벤트를 발생시키는 메서드
-        private void OnNotify(string type, string command, string message)
-        {
-            if (Notify != null)
-                Notify(this, new DieEventArgs(type, command, message)); // DieEventArgs 객체를 생성하여 이벤트 핸들러에 전달
-        }
-
         // dieID, dieWidth, dieHeight를 전달받아 초기화하는 생성자
         // 추후 File I/O나 이미지 처리 가능하면 dieWidth, dieHeight 자동 처리로 수정
         public Die(string dieID, int width, int height)
@@ -138,6 +131,13 @@ namespace week2_hw2
             File.WriteAllLines(filePath, lines);
 
             OnNotify("Log", command, $"{DieID}의 결함 박스 마스크를 {filePath}에 저장함.");
+        }
+
+        // Die 내부에서 Notify 이벤트를 발생시키는 메서드
+        private void OnNotify(string type, string command, string message)
+        {
+            if (Notify != null)
+                Notify(this, new DieEventArgs(type, command, message)); // DieEventArgs 객체를 생성하여 이벤트 핸들러에 전달
         }
     }
 }
