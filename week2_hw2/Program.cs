@@ -71,15 +71,7 @@ namespace week2_hw2
         // dieID로 다이를 찾는 메서드 (없으면 null 반환)
         static Die FindDie(string dieID)
         {
-            foreach (Die die in dies)
-            {
-                if (die.DieID == dieID)
-                {
-                    return die;
-                }
-            }
-
-            return null;
+            return dies.FirstOrDefault(die => die.DieID == dieID);
         }
 
         // > create_die dieID dieWidth dieHeight
@@ -115,24 +107,15 @@ namespace week2_hw2
         static void RemoveDie(string[] words)
         {
             string dieID = words[1]; // 제거할 다이의 ID (dieID)
+            Die die = FindDie(dieID);
 
-            int index = -1;
-            for (int i = 0; i < dies.Count; i++)
-            {
-                if (dies[i].DieID == dieID)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index == -1)
+            if (die == null)
             {
                 Logger.Log("Error", words[0], "삭제 실패. 존재하지 않는 dieID입니다.");
                 return;
             }
 
-            dies.RemoveAt(index); // RemoveAt: 리스트에서 특정 인덱스의 요소 제거
+            dies.Remove(die);
 
             Logger.Log("Log", words[0], $"{dieID} 다이를 제거함.");
         }
